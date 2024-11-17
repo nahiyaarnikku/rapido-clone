@@ -17,13 +17,14 @@ const CustomerLogin = React.lazy(() => import('./Components/Login/CustomerLogin'
 const CaptainSignup = React.lazy(() => import('./Components/Register/CaptainSignup'));
 const CustomerSignup = React.lazy(() => import('./Components/Register/CustomerSignup'));
 const Register = React.lazy(() => import('./Components/Register/Register'));
+const Stripe = React.lazy(() => import('./Components/PaymentGateway/Stripe'));
 
 function App() {
 
   return (
     <div>
       <DataProvider>
-        <Navbar />
+        {/* <Navbar /> */}
         <Routes>
           <Route path="/" element={<Suspense fallback={<div className='suspense'> <ClipLoader
             color={"#f9c935"}
@@ -84,6 +85,16 @@ function App() {
             aria-label="Loading Spinner"
             data-testid="loader"
           /></div>}> <Register /></Suspense>} />
+          <Route path="/stripe" element={<Suspense fallback={<div className='suspense'> <ClipLoader
+            color={"#f9c935"}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          /></div>}> <Stripe /></Suspense>} />
+          <Route path="/routeplanner" element={<Suspense fallback={<div className='suspense'> <ClipLoader
+            color={"#f9c935"}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          /></div>}> <RoutePlanner /></Suspense>} />
         </Routes>
       </DataProvider>
     </div>
