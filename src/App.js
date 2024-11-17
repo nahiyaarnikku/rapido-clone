@@ -1,10 +1,11 @@
-import React, { Suspense } from 'react'
-import './App.css';
-import { DataProvider } from './Context/Context';
-import Navbar from './Components/Navbar/Navbar';
-import { Routes, Route } from 'react-router-dom'
+import React, { Suspense } from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import ClipLoader from "react-spinners/ClipLoader";
+import './App.css';
+import Navbar from './Components/Navbar/Navbar';
 import RoutePlanner from './Components/RoutePlanner/RoutePlanner';
+import SignIn from './Components/SignIn';
+import { DataProvider } from './Context/Context';
 
 const Home = React.lazy(() => import('./Components/Home/Home'));
 const About = React.lazy(() => import('./Components/About/About'));
@@ -19,11 +20,12 @@ const CustomerSignup = React.lazy(() => import('./Components/Register/CustomerSi
 const Register = React.lazy(() => import('./Components/Register/Register'));
 
 function App() {
-
+  const location = useLocation(); // Get the current route
   return (
     <div>
       <DataProvider>
-        <Navbar />
+        {/* Render Navbar only if the current path is not '/route-planner' */}
+        {location.pathname !== '/route-planner' || location.pathname !== '/test-otp'  && <Navbar />}
         <Routes>
           <Route path="/" element={<Suspense fallback={<div className='suspense'> <ClipLoader
             color={"#f9c935"}
@@ -84,6 +86,8 @@ function App() {
             aria-label="Loading Spinner"
             data-testid="loader"
           /></div>}> <Register /></Suspense>} />
+          <Route path='route-planner' element={<RoutePlanner />} />
+          <Route path='test-otp' element={<SignIn />} />
         </Routes>
       </DataProvider>
     </div>
