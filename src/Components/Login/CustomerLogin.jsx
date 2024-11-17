@@ -11,7 +11,7 @@ const CustomerLogin = () => {
   const [error, setError] = useState('');
 
   const generateOtp = () => {
-    const newOtp = Math.floor(100000 + Math.random() * 900000).toString();
+    const newOtp = Math.floor(1000 + Math.random() * 9000).toString();
     setGeneratedOtp(newOtp);
     // In a real application, you would send this OTP to the user's phone number
     console.log(`OTP sent to ${phoneNumber}: ${newOtp}`);
@@ -90,8 +90,8 @@ const CustomerLogin = () => {
                 onChange={(e) => setOtp(e.target.value)}
                 className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-yellow-500 focus:border-yellow-500"
                 required
-                pattern="[0-9]{6}"
-                placeholder="Enter 6-digit OTP"
+                pattern="[0-9]{4}"
+                placeholder="Enter 4-digit OTP"
               />
             </div>
           )}
