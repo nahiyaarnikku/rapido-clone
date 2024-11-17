@@ -1,0 +1,90 @@
+/* CaptainLogin.css */
+
+/* Custom styles for the Captain Login page */
+
+/* Adjust the background color to match Rapido's yellow */
+.bg-yellow-400 {
+    background-color: #FED403;
+  }
+  
+  /* Custom focus styles for input fields */
+  input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(254, 212, 3, 0.5);
+  }
+  
+  /* Custom hover effect for buttons */
+  button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 640px) {
+    .max-w-md {
+      max-width: 90%;
+    }
+  
+    h1 {
+      font-size: 1.5rem;
+    }
+  
+    .text-xl {
+      font-size: 1.1rem;
+    }
+  
+    .text-sm {
+      font-size: 0.8rem;
+    }
+  }
+  
+  /* Custom animation for the captain icon */
+  .captain-icon {
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .captain-icon:hover {
+    transform: scale(1.1);
+  }
+  
+  /* Custom styles for links */
+  a {
+    transition: color 0.3s ease;
+  }
+  
+  a:hover {
+    color: #FEC503;
+  }
+  
+  /* Custom box shadow for the main card */
+  .shadow-xl {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+  
+  /* Smooth transition for all interactive elements */
+  button, input, a {
+    transition: all 0.3s ease;
+  }
+  
+  /* Custom placeholder color */
+  ::placeholder {
+    color: #A0AEC0;
+  }
+  
+  /* Custom scrollbar styles */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #FED403;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #FEC503;
+  }

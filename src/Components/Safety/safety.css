@@ -1,0 +1,43 @@
+.safety-container{
+    width: 100%;
+    min-height :300px; 
+    margin-top: 73px;
+}
+.nav-containers{
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+   position: fixed; 
+   top: 73px;
+   padding: 10px 0px;
+   background-color: white;
+}
+.safety-nav{
+    font-weight: 500;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+}
+.main{
+    margin-top: 120px;
+    min-height: 200px;
+}
+.cover-text{
+ font-size: 30px;
+    font-weight: 600;
+    margin-left: 30px;  
+}
+.img-1{
+    width: 500px;
+}
+
+
+@media(width<=767px){
+    .cover-text{
+        font-size: 18px;
+        margin-left: 10px;
+        width:100%;
+    }
+}

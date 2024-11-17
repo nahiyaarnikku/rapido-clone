@@ -1,0 +1,174 @@
+/* Overall Styling */
+.min-h-screen {
+    min-height: 100vh;
+  }
+  
+  .bg-yellow-400 {
+    background-color: #ffd700; /* Rapido yellow */
+  }
+  
+  .bg-white {
+    background-color: #ffffff;
+  }
+  
+  .text-gray-700 {
+    color: #4a4a4a;
+  }
+  
+  .text-gray-800 {
+    color: #333333;
+  }
+  
+  /* Form Input Styles */
+  input, select {
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  input:focus, select:focus {
+    border-color: #ffd700; /* Yellow border on focus */
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+  }
+  
+  .form-radio {
+    height: 18px;
+    width: 18px;
+    margin-right: 8px;
+    margin-left: 4px;
+  }
+  
+  .mt-1 {
+    margin-top: 8px;
+  }
+  
+  .mt-2 {
+    margin-top: 16px;
+  }
+  
+  .mt-4 {
+    margin-top: 32px;
+  }
+  
+  .w-full {
+    width: 100%;
+  }
+  
+  /* Button Styles */
+  button {
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 12px;
+    font-weight: bold;
+    text-align: center;
+    display: inline-block;
+    transition: all 0.3s ease;
+  }
+  
+  button:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .bg-black {
+    background-color: #000000;
+  }
+  
+  .bg-gray-800 {
+    background-color: #333333;
+  }
+  
+  .text-white {
+    color: #ffffff;
+  }
+  
+  /* Error Text */
+  .text-red-500 {
+    color: #e53e3e;
+  }
+  
+  /* Card and Layout Styles */
+  .shadow-xl {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .rounded-lg {
+    border-radius: 12px;
+  }
+  
+  .max-w-md {
+    max-width: 28rem; /* 448px */
+  }
+  
+  .p-8 {
+    padding: 32px;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  /* Logo Image Styling */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Footer Styling */
+  .font-bold {
+    font-weight: bold;
+  }
+  
+  .text-xl {
+    font-size: 1.25rem;
+  }
+  
+  .text-sm {
+    font-size: 0.875rem;
+  }
+  
+  .mb-2 {
+    margin-bottom: 8px;
+  }
+  
+  .space-y-4 > * + * {
+    margin-top: 16px;
+  }
+  
+  .mt-8 {
+    margin-top: 32px;
+  }
+  
+  .flex {
+    display: flex;
+  }
+  
+  .flex-col {
+    flex-direction: column;
+  }
+  
+  .justify-center {
+    justify-content: center;
+  }
+  
+  .items-center {
+    align-items: center;
+  }
+  
+  /* For responsiveness */
+  @media (min-width: 640px) {
+    .max-w-md {
+      max-width: 100%; /* Makes it full-width on smaller screens */
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .max-w-md {
+      max-width: 28rem; /* Reverts to fixed width on larger screens */
+    }
+  }
+  
