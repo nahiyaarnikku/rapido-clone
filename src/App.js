@@ -1,10 +1,10 @@
-import React, { Suspense } from 'react'
-import './App.css';
-import { DataProvider } from './Context/Context';
-import Navbar from './Components/Navbar/Navbar';
-import { Routes, Route } from 'react-router-dom'
+import React, { Suspense } from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import ClipLoader from "react-spinners/ClipLoader";
+import './App.css';
+import Navbar from './Components/Navbar/Navbar';
 import RoutePlanner from './Components/RoutePlanner/RoutePlanner';
+import { DataProvider } from './Context/Context';
 
 const Home = React.lazy(() => import('./Components/Home/Home'));
 const About = React.lazy(() => import('./Components/About/About'));
@@ -20,11 +20,16 @@ const Register = React.lazy(() => import('./Components/Register/Register'));
 const Stripe = React.lazy(() => import('./Components/PaymentGateway/Stripe'));
 
 function App() {
-
+  const location = useLocation(); // Get the current route
   return (
     <div>
       <DataProvider>
+<<<<<<< HEAD
         {/* <Navbar /> */}
+=======
+        {/* Render Navbar only if the current path is not '/route-planner' */}
+        {location.pathname !== '/route-planner' && <Navbar />}
+>>>>>>> 35d76777ffbf3f05e49852754aa7aae08569314a
         <Routes>
           <Route path="/" element={<Suspense fallback={<div className='suspense'> <ClipLoader
             color={"#f9c935"}
@@ -85,6 +90,7 @@ function App() {
             aria-label="Loading Spinner"
             data-testid="loader"
           /></div>}> <Register /></Suspense>} />
+<<<<<<< HEAD
           <Route path="/stripe" element={<Suspense fallback={<div className='suspense'> <ClipLoader
             color={"#f9c935"}
             aria-label="Loading Spinner"
@@ -95,6 +101,9 @@ function App() {
             aria-label="Loading Spinner"
             data-testid="loader"
           /></div>}> <RoutePlanner /></Suspense>} />
+=======
+          <Route path='route-planner' element={<RoutePlanner />} />
+>>>>>>> 35d76777ffbf3f05e49852754aa7aae08569314a
         </Routes>
       </DataProvider>
     </div>
