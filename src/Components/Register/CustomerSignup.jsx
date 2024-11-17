@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './CustomerSignup.css';
-import logo from '../../Assets/logo.jpeg';
+import logo from '../../Assets/logo.svg';
 import customer from '../../Assets/passanger.webp';
 
 const CustomerSignup = ({ isOpen, onClose }) => {

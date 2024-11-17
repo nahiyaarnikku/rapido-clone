@@ -4,6 +4,7 @@ import { DataProvider } from './Context/Context';
 import Navbar from './Components/Navbar/Navbar';
 import {Routes,Route} from 'react-router-dom'
 import ClipLoader from "react-spinners/ClipLoader";
+import RoutePlanner from './Components/RoutePlanner/RoutePlanner';
 
 const Home = React.lazy(()=> import('./Components/Home/Home')) ;
 const About = React.lazy(()=> import('./Components/About/About')) ;
@@ -70,7 +71,7 @@ function App() {
         aria-label="Loading Spinner"
         data-testid="loader"
       /></div>}> <CaptainSignup /></Suspense>} />
-      <Route path="/CustomerSignup" element={<Suspense fallback={<div className='suspense'> <ClipLoader
+      <Route path="/customer-signup" element={<Suspense fallback={<div className='suspense'> <ClipLoader
         color={"#f9c935"}
         aria-label="Loading Spinner"
         data-testid="loader"
@@ -80,6 +81,7 @@ function App() {
         aria-label="Loading Spinner"
         data-testid="loader"
       /></div>}> <Register /></Suspense>} />
+      <Route path='/route-planner' element={<RoutePlanner />} />
      </Routes>
    </DataProvider>
   </div>
