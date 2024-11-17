@@ -121,7 +121,7 @@ const CustomerSignup = ({ isOpen, onClose }) => {
           />
           <h1 className="text-2xl font-bold text-gray-800">Sign Up as a Customer</h1>
         </div>
-        
+
         <div className="flex justify-center mb-6">
           <img
             src={customer}
