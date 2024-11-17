@@ -4,7 +4,6 @@ import ClipLoader from "react-spinners/ClipLoader";
 import './App.css';
 import Navbar from './Components/Navbar/Navbar';
 import RoutePlanner from './Components/RoutePlanner/RoutePlanner';
-import SignIn from './Components/SignIn';
 import { DataProvider } from './Context/Context';
 
 const Home = React.lazy(() => import('./Components/Home/Home'));
@@ -25,7 +24,7 @@ function App() {
     <div>
       <DataProvider>
         {/* Render Navbar only if the current path is not '/route-planner' */}
-        {location.pathname !== '/route-planner' || location.pathname !== '/test-otp'  && <Navbar />}
+        {location.pathname !== '/route-planner' && <Navbar />}
         <Routes>
           <Route path="/" element={<Suspense fallback={<div className='suspense'> <ClipLoader
             color={"#f9c935"}
@@ -87,7 +86,6 @@ function App() {
             data-testid="loader"
           /></div>}> <Register /></Suspense>} />
           <Route path='route-planner' element={<RoutePlanner />} />
-          <Route path='test-otp' element={<SignIn />} />
         </Routes>
       </DataProvider>
     </div>
