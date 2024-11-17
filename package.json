@@ -3,30 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-<<<<<<< HEAD
-    "@radix-ui/react-label": "^2.1.0",
-    "@radix-ui/react-slot": "^1.1.0",
-    "@stripe/react-stripe-js": "^2.9.0",
-    "@stripe/stripe-js": "^4.10.0",
-=======
     "@chakra-ui/react": "^1.8.6",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "@react-google-maps/api": "^2.7.0",
->>>>>>> 35d76777ffbf3f05e49852754aa7aae08569314a
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "avatar": "^0.1.0",
     "bootstrap": "^5.3.3",
-<<<<<<< HEAD
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.1",
-    "lucide-react": "^0.460.0",
-=======
     "firebase": "^11.0.2",
     "framer-motion": "^6",
->>>>>>> 35d76777ffbf3f05e49852754aa7aae08569314a
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.1",
     "react-dom": "^18.2.0",

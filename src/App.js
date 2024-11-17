@@ -24,12 +24,8 @@ function App() {
   return (
     <div>
       <DataProvider>
-<<<<<<< HEAD
-        {/* <Navbar /> */}
-=======
         {/* Render Navbar only if the current path is not '/route-planner' */}
         {location.pathname !== '/route-planner' && <Navbar />}
->>>>>>> 35d76777ffbf3f05e49852754aa7aae08569314a
         <Routes>
           <Route path="/" element={<Suspense fallback={<div className='suspense'> <ClipLoader
             color={"#f9c935"}
@@ -90,20 +86,7 @@ function App() {
             aria-label="Loading Spinner"
             data-testid="loader"
           /></div>}> <Register /></Suspense>} />
-<<<<<<< HEAD
-          <Route path="/stripe" element={<Suspense fallback={<div className='suspense'> <ClipLoader
-            color={"#f9c935"}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          /></div>}> <Stripe /></Suspense>} />
-          <Route path="/routeplanner" element={<Suspense fallback={<div className='suspense'> <ClipLoader
-            color={"#f9c935"}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          /></div>}> <RoutePlanner /></Suspense>} />
-=======
           <Route path='route-planner' element={<RoutePlanner />} />
->>>>>>> 35d76777ffbf3f05e49852754aa7aae08569314a
         </Routes>
       </DataProvider>
     </div>
