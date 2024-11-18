@@ -13,7 +13,6 @@ const CustomerLogin = () => {
   const generateOtp = () => {
     const newOtp = Math.floor(1000 + Math.random() * 9000).toString();
     setGeneratedOtp(newOtp);
-    // In a real application, you would send this OTP to the user's phone number
     console.log(`OTP sent to ${phoneNumber}: ${newOtp}`);
     setOtpSent(true);
     setError('');

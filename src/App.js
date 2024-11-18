@@ -18,6 +18,7 @@ const CaptainSignup = React.lazy(() => import('./Components/Register/CaptainSign
 const CustomerSignup = React.lazy(() => import('./Components/Register/CustomerSignup'));
 const Register = React.lazy(() => import('./Components/Register/Register'));
 const Stripe = React.lazy(() => import('./Components/PaymentGateway/Stripe'));
+const Dashboard = React.lazy(() => import('./Components/Dashboard/Dashboard'));
 
 function App() {
   const location = useLocation(); // Get the current route
@@ -87,6 +88,8 @@ function App() {
             data-testid="loader"
           /></div>}> <Register /></Suspense>} />
           <Route path='route-planner' element={<RoutePlanner />} />
+          <Route path='/stripe' element={<Stripe />} />
+          <Route path='/captaindashboard' element={<Dashboard />} />
         </Routes>
       </DataProvider>
     </div>
