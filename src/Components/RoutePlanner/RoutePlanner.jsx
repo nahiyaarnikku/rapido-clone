@@ -122,7 +122,7 @@ function RoutePlanner() {
           </Box>
 
           <ButtonGroup>
-            <Button colorScheme='pink' type='submit' onClick={calculateRoute}>
+            <Button colorScheme='#9ca3af' backgroundColor={'#Fbbf24'} type='submit' onClick={calculateRoute}>
               Calculate Route
             </Button>
             <IconButton

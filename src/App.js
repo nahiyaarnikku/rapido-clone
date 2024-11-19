@@ -29,7 +29,7 @@ function App() {
     <div>
       <DataProvider>
         {/* Render Navbar only if the current path is not '/route-planner' */}
-        {location.pathname !== '/route-planner' && <Navbar />}
+        {/* {location.pathname !== '/route-planner' && <Navbar />} */}
         <Routes>
           <Route path="/home" element={<Suspense fallback={<div className='suspense'> <ClipLoader
             color={"#f9c935"}

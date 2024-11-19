@@ -1,22 +1,8 @@
 import React from 'react'
-import { Bike, Truck, Menu, MapPin, Clock, CreditCard } from 'lucide-react'
+import { Bike, Menu, MapPin, Clock, CreditCard, User } from 'lucide-react'
 import './cmh.css'
 
 export default function HomePage() {
-  const buttonStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '12px',
-    border: '1px solid #e2e8f0',
-    borderRadius: '8px',
-    backgroundColor: 'white',
-    color: 'black',
-    fontSize: '16px',
-    cursor: 'pointer',
-    transition: 'transform 0.3s, box-shadow 0.3s',
-  }
-
   const iconButtonStyle = {
     display: 'flex',
     flexDirection: 'column',
@@ -61,14 +47,9 @@ export default function HomePage() {
               />
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
-              <button style={buttonStyle} onMouseOver={() => { buttonStyle.transform = 'scale(1.05)'; buttonStyle.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)'; }} onMouseOut={() => { buttonStyle.transform = 'scale(1)'; buttonStyle.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.1)'; }}>
-                <Bike style={{ height: '24px', width: '24px', marginRight: '8px' }} />
-                <span>Bike</span>
-              </button>
-              <button style={buttonStyle} onMouseOver={() => { buttonStyle.transform = 'scale(1.05)'; buttonStyle.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.2)'; }} onMouseOut={() => { buttonStyle.transform = 'scale(1)'; buttonStyle.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.1)'; }}>
-                <Truck style={{ height: '24px', width: '24px', marginRight: '8px' }} />
-                <span>Auto</span>
-              </button>
+              <a href='/route-planner' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: '#fbbf24', textDecoration: 'none' }}>
+              <span style={{ fontSize: '24px', fontWeight: '600', alignSelf: 'center', marginLeft: '8px' }}>Book Ride</span>
+              </a>
             </div>
           </div>
         </section>
@@ -107,7 +88,7 @@ export default function HomePage() {
 
       <footer style={{ backgroundColor: 'white', padding: '16px', boxShadow: '0 -1px 3px rgba(0, 0, 0, 0.1)' }}>
         <nav style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'space-around' }}>
-          <a href="/home" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: '#fbbf24', textDecoration: 'none' }}>
+          <a href="/customerhome" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: '#fbbf24', textDecoration: 'none' }}>
             <Bike style={{ height: '24px', width: '24px' }} />
             <span style={{ fontSize: '12px', marginTop: '4px' }}>Home</span>
           </a>
@@ -115,9 +96,9 @@ export default function HomePage() {
             <Clock style={{ height: '24px', width: '24px' }} />
             <span style={{ fontSize: '12px', marginTop: '4px' }}>My Rides</span>
           </a>
-          <a href="/offers" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: '#9ca3af', textDecoration: 'none' }}>
-            <CreditCard style={{ height: '24px', width: '24px' }} />
-            <span style={{ fontSize: '12px', marginTop: '4px' }}>Offers</span>
+          <a href="/customerprofile" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: '#9ca3af', textDecoration: 'none' }}>
+            <User style={{ height: '24px', width: '24px' }} />
+            <span style={{ fontSize: '12px', marginTop: '4px' }}>Profile</span>
           </a>
         </nav>
       </footer>

@@ -12,11 +12,11 @@ body, html {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: #F5F5F5;
+    background-color: #FFF;
 }
 
 .navbar {
-    background-color: #FFBF00;
+    background-color: #FFFAE6;
     padding: 1rem;
 }
 

@@ -1,8 +1,6 @@
 import React from 'react';
 import './cmp.css';
 import { Bike, Clock, User } from 'lucide-react'
-import CustomerLogin from '../Login/CustomerLogin';
-
 
 const Profile = () => {
   return (
@@ -12,7 +10,7 @@ const Profile = () => {
         <div className="back-btn">
           <i className="fas fa-arrow-left"></i> Back
         </div>
-        <h1>Tanvi Dubey's Profile</h1>
+        <h1>Customer's Profile</h1>
       </header>
 
       {/* Profile Body */}
@@ -33,15 +31,15 @@ const Profile = () => {
         <div className="profile-stats">
           <div className="profile-stat">
             <span className="stat-value">52</span>
-            <span className="stat-label">Rides</span>
+            <span className="stat-label"> Rides</span>
           </div>
           <div className="profile-stat">
             <span className="stat-value">₹ 8,000</span>
-            <span className="stat-label">Total Earnings</span>
+            <span className="stat-label"> Total Spendings</span>
           </div>
           <div className="profile-stat">
             <span className="stat-value">4.8</span>
-            <span className="stat-label">Rating</span>
+            <span className="stat-label"> Rating</span>
           </div>
         </div>
 
@@ -50,8 +48,8 @@ const Profile = () => {
           <div className="recent-ride-item">
             <i className="fas fa-map-marker-alt recent-ride-icon"></i>
             <div className="recent-ride-details">
-              <span className="recent-ride-route">Sector 62 to Sector 15</span>
-              <span className="recent-ride-date">Nov 17, 2024</span>
+              <span className="recent-ride-route">Sector 62 to Sector 15</span> 
+              <span className="recent-ride-date"> Nov 17, 2024</span>
             </div>
             <span className="recent-ride-amount">₹ 450</span>
           </div>
@@ -65,7 +63,11 @@ const Profile = () => {
           <a href="#" className="account-option-link">
             <i className="fas fa-wallet account-option-icon"></i> Payments
           </a>
-          <button className="logout-button">Logout</button>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+              <a href='/customerlogin' style={{ display: 'flex', flexDirection: 'column', width: '100%', color: '#fbbf24', textDecoration: 'none' }}>
+              <span style={{ fontSize: '24px', fontWeight: '600', marginLeft: 'auto'}}>Log Out</span>
+              </a>
+            </div>
         </div>
       </section>
 

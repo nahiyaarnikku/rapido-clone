@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Phone, AlertTriangle, ThumbsUp, HelpCircle, ChevronRight, MessageSquare, X } from 'lucide-react'
 import '../Help/help.css'
+import logo from '../../Assets/logo.svg'
 
 const helpOptions = [
   { icon: Phone, text: 'Contact Driver', value: 'driver' },
@@ -40,7 +41,7 @@ export default function CustomerHelpPage() {
     <div className="page-container">
       <nav className="navbar">
         <div className="navbar-content">
-          <h1 className="text-2xl font-bold text-gray-800">Rapido</h1>
+          <img src={logo} alt="Logo" className="app-logo" />
         </div>
       </nav>
 
