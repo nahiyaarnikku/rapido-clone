@@ -1,0 +1,225 @@
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f3f4f6;
+  }
+  
+  h1, h2, h3 {
+    margin: 0;
+  }
+  
+  button {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+  /* Header */
+  header {
+    background-color: #fbbf24;
+    color: black;
+    padding: 16px;
+  }
+  
+  header .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  header h1 {
+    font-size: 28px;
+    font-weight: 700;
+  }
+  
+  header .menu-icon {
+    height: 24px;
+    width: 24px;
+  }
+  
+  /* Main Container */
+  main {
+    flex-grow: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+  
+  /* Input Section */
+  .input-section {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .input-section .location-input {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .input-section .location-input input {
+    flex-grow: 1;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .input-section button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background-color: white;
+    color: black;
+    font-size: 16px;
+  }
+  
+  .input-section button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .input-section button:focus {
+    outline: none;
+  }
+  
+  .input-section .icon-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 96px;
+    background-color: white;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: black;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .input-section .icon-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Quick Links Section */
+  .quick-links-section {
+    margin-bottom: 24px;
+  }
+  
+  .quick-links-section h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  
+  .quick-links-section .quick-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+  }
+  
+  .quick-links-section .quick-links button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 96px;
+    background-color: white;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: black;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .quick-links-section .quick-links button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Offer Section */
+  .offer-section {
+    margin-bottom: 24px;
+  }
+  
+  .offer-section h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  
+  .offer-section .offer-card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .offer-section .offer-card .offer-icon {
+    background-color: #fbbf24;
+    border-radius: 50%;
+    padding: 12px;
+    margin-right: 20px;
+  }
+  
+  .offer-section .offer-card h3 {
+    font-weight: 600;
+    font-size: 18px;
+  }
+  
+  .offer-section .offer-card p {
+    font-size: 14px;
+    color: #4b5563;
+  }
+  
+  /* Footer */
+  footer {
+    background-color: white;
+    padding: 16px;
+    box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  footer .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  footer .footer-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #9ca3af;
+    text-decoration: none;
+  }
+  
+  footer .footer-link:hover {
+    color: #fbbf24;
+  }
+  
+  footer .footer-link span {
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  

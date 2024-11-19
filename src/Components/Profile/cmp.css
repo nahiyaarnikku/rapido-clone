@@ -1,0 +1,233 @@
+/* Global Styles */
+:root {
+    --primary-bg: #f5f5f5;
+    --card-bg: #ffffff;
+    --primary-color: #fbbf24; /* Rapido Yellow */
+    --text-color: #333333;
+    --gray-light: #f0f0f0;
+    --gray-dark: #555555;
+    --accent-color: #ffad00;
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-dark: rgba(0, 0, 0, 0.3);
+  }
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--primary-bg);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Profile Container */
+  .profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: var(--card-bg);
+    padding: 3rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 30px var(--shadow-light);
+  }
+  
+  /* Profile Header */
+  .profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    background-color: var(--primary-color);
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    color: white;
+  }
+  
+  .profile-header h1 {
+    font-size: 2.2rem;
+    font-weight: 600;
+  }
+  
+  .back-btn {
+    cursor: pointer;
+    font-size: 1.25rem;
+    font-weight: 500;
+    transition: 0.3s;
+  }
+  
+  .back-btn:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Profile Info */
+  .profile-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 3rem;
+  }
+  
+  .profile-avatar {
+    width: 100px;
+    height: 100px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    color: white;
+    margin-right: 2rem;
+  }
+  
+  .profile-details {
+    flex-grow: 1;
+  }
+  
+  .profile-name {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .profile-phone {
+    font-size: 1.25rem;
+    color: var(--gray-dark);
+  }
+  
+  .profile-edit-button {
+    padding: 0.8rem 2rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .profile-edit-button:hover {
+    background-color: var(--accent-color);
+  }
+  
+  /* Stats Section */
+  .profile-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+  }
+  
+  .profile-stat {
+    text-align: center;
+  }
+  
+  .stat-value {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--primary-color);
+  }
+  
+  .stat-label {
+    font-size: 1rem;
+    color: var(--gray-dark);
+  }
+  
+  /* Recent Rides Section */
+  .recent-rides {
+    margin-bottom: 3rem;
+  }
+  
+  .recent-ride-item {
+    background-color: var(--card-bg);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px var(--shadow-light);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .recent-ride-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 30px var(--shadow-dark);
+  }
+  
+  .recent-ride-icon {
+    font-size: 1.75rem;
+    color: var(--primary-color);
+    margin-right: 1.5rem;
+  }
+  
+  .recent-ride-details {
+    font-size: 1.2rem;
+    color: var(--text-color);
+  }
+  
+  .recent-ride-route {
+    font-weight: 600;
+  }
+  
+  .recent-ride-date {
+    color: var(--gray-dark);
+  }
+  
+  .recent-ride-amount {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    font-weight: 600;
+  }
+  
+  /* Account Options */
+  .account-options {
+    margin-bottom: 2rem;
+  }
+  
+  .account-option-link {
+    display: flex;
+    align-items: center;
+    padding: 1.25rem 2rem;
+    border-radius: 10px;
+    background-color: var(--card-bg);
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    transition: background-color 0.3s;
+  }
+  
+  .account-option-link:hover {
+    background-color: var(--gray-light);
+  }
+  
+  .account-option-icon {
+    font-size: 1.75rem;
+    color: var(--primary-color);
+    margin-right: 1.5rem;
+  }
+  
+  /* Footer */
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 12px 12px 0 0;
+  }
+  
+  .footer-nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+  }
+  
+  .footer-nav-icon {
+    font-size: 1.75rem;
+  }
+  
+  .footer-nav-text {
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+  }
+  
