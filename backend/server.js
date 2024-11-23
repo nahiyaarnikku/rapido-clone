@@ -2,6 +2,11 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('./config/db');
+const userRoutes = require('./routes/userRoutes');
+const captainRoutes = require('./routes/captainRoutes');
+const adminRoutes = require('./routes/adminRoutes');
+const rideRoutes = require('./routes/rideRoutes');
+const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 dotenv.config();
 connectDB();
@@ -12,7 +17,13 @@ app.use(cors());
 app.use(express.json());
 
 // API Routes
-app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/users', userRoutes);
+app.use('/api/captains', captainRoutes);
+app.use('/api/admins', adminRoutes);
+app.use('/api/rides', rideRoutes);
+
+app.use(notFound);
+app.use(errorHandler);
 
 // Serve React in production
 if (process.env.NODE_ENV === 'production') {
