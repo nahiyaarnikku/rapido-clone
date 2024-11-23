@@ -6,6 +6,8 @@ import Navbar from './Components/Navbar/Navbar';
 import RoutePlanner from './Components/RoutePlanner/RoutePlanner';
 import { DataProvider } from './Context/Context';
 
+export const BaseUrl = 'http://localhost:5000';
+
 const Home = React.lazy(() => import('./Components/Home/Home'));
 const About = React.lazy(() => import('./Components/About/About'));
 const Careers = React.lazy(() => import('./Components/Carrers/Careers'))
@@ -25,12 +27,15 @@ const CustomerProfile = React.lazy(() => import('./Components/Profile/customerpr
 
 function App() {
   const location = useLocation(); // Get the current route
+  // Define your multiple conditions
+  const shouldRenderNavbar = location.pathname !== '/route-planner' && location.pathname !== '/customerhome' && location.pathname !== '/customerprofile' && location.pathname !== '/customerlogin1';
+
   return (
     <div className='app'>
       <DataProvider>
         {/* Render Navbar only if the current path is not '/route-planner' */}
-        {location.pathname !== '/route-planner' && <Navbar />}
-        <div className='content'>
+        {shouldRenderNavbar && <Navbar />}
+        <div className={shouldRenderNavbar ? 'content' : ''}>
           <Routes>
             <Route path="/home" element={<Suspense fallback={<div className='suspense'> <ClipLoader
               color={"#f9c935"}

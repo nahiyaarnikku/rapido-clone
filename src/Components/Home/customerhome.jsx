@@ -1,8 +1,35 @@
-import React from 'react'
-import { Bike, Menu, MapPin, Clock, CreditCard, User } from 'lucide-react'
-import './cmh.css'
+import { Bike, Clock, CreditCard, MapPin, Menu, User } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import './cmh.css';
+import { useNavigate } from 'react-router-dom';
+import { BaseUrl } from '../../App';
+import axios from 'axios';
 
 export default function HomePage() {
+  const navigate = useNavigate();
+  const [userProfile, setUserProfile] = useState(null);
+
+  const getUserProfileDetails = async (token) => {
+    try {
+      const response = await axios.get(BaseUrl + '/api/users/profile', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setUserProfile(response.data);
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+      navigate('/customerlogin'); // Redirect to login page if error occurs
+    }
+  }
+  // getUserProfileDetails
+  useEffect(() => {
+    const token = localStorage.getItem('token'); // Get token from localStorage
+
+    if (!token) {
+      console.log('No token found');
+      navigate('/customerlogin');
+    }
+    getUserProfileDetails(token);
+  }, []);
   const iconButtonStyle = {
     display: 'flex',
     flexDirection: 'column',
@@ -18,6 +45,26 @@ export default function HomePage() {
     cursor: 'pointer',
     transition: 'transform 0.3s, box-shadow 0.3s',
   }
+
+  const [buttonStyle, setButtonStyle] = useState({
+    transform: 'scale(1)',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+  });
+
+  const handleMouseOver = () => {
+    setButtonStyle({
+      transform: 'scale(1.05)',
+      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.15)',
+    });
+  };
+
+  const handleMouseOut = () => {
+    setButtonStyle({
+      transform: 'scale(1)',
+      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    });
+  };
+
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#f3f4f6', display: 'flex', flexDirection: 'column' }}>
@@ -48,7 +95,7 @@ export default function HomePage() {
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
               <a href='/route-planner' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: '#fbbf24', textDecoration: 'none' }}>
-              <span style={{ fontSize: '24px', fontWeight: '600', alignSelf: 'center', marginLeft: '8px' }}>Book Ride</span>
+                <span style={{ fontSize: '24px', fontWeight: '600', alignSelf: 'center', marginLeft: '8px' }}>Book Ride</span>
               </a>
             </div>
           </div>
@@ -57,15 +104,27 @@ export default function HomePage() {
         <section style={{ marginBottom: '24px' }}>
           <h2 style={{ fontSize: '22px', fontWeight: '600', marginBottom: '16px' }}>Quick Links</h2>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '20px' }}>
-            <button style={iconButtonStyle} onMouseOver={() => { iconButtonStyle.transform = 'scale(1.05)'; iconButtonStyle.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.15)'; }} onMouseOut={() => { iconButtonStyle.transform = 'scale(1)'; iconButtonStyle.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)'; }}>
+            <button
+              style={buttonStyle}
+              onMouseOver={handleMouseOver}
+              onMouseOut={handleMouseOut}
+            >
               <Clock style={{ height: '24px', width: '24px', marginBottom: '8px', color: '#fbbf24' }} />
               <span>Ride Later</span>
             </button>
-            <button style={iconButtonStyle} onMouseOver={() => { iconButtonStyle.transform = 'scale(1.05)'; iconButtonStyle.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.15)'; }} onMouseOut={() => { iconButtonStyle.transform = 'scale(1)'; iconButtonStyle.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)'; }}>
+            <button
+              style={buttonStyle}
+              onMouseOver={handleMouseOver}
+              onMouseOut={handleMouseOut}
+            >
               <MapPin style={{ height: '24px', width: '24px', marginBottom: '8px', color: '#fbbf24' }} />
               <span>My Places</span>
             </button>
-            <button style={iconButtonStyle} onMouseOver={() => { iconButtonStyle.transform = 'scale(1.05)'; iconButtonStyle.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.15)'; }} onMouseOut={() => { iconButtonStyle.transform = 'scale(1)'; iconButtonStyle.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)'; }}>
+            <button
+              style={buttonStyle}
+              onMouseOver={handleMouseOver}
+              onMouseOut={handleMouseOut}
+            >
               <CreditCard style={{ height: '24px', width: '24px', marginBottom: '8px', color: '#fbbf24' }} />
               <span>Payments</span>
             </button>
@@ -88,18 +147,18 @@ export default function HomePage() {
 
       <footer style={{ backgroundColor: 'white', padding: '16px', boxShadow: '0 -1px 3px rgba(0, 0, 0, 0.1)' }}>
         <nav style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'space-around' }}>
-          <a href="/customerhome" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: '#fbbf24', textDecoration: 'none' }}>
+          <div onClick={() => navigate("/customerhome")} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: '#fbbf24', textDecoration: 'none', cursor: 'pointer' }}>
             <Bike style={{ height: '24px', width: '24px' }} />
             <span style={{ fontSize: '12px', marginTop: '4px' }}>Home</span>
-          </a>
-          <a href="/my-rides" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: '#9ca3af', textDecoration: 'none' }}>
+          </div>
+          <div onClick={() => navigate("/my-rides")} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: '#9ca3af', textDecoration: 'none', cursor: 'pointer' }}>
             <Clock style={{ height: '24px', width: '24px' }} />
             <span style={{ fontSize: '12px', marginTop: '4px' }}>My Rides</span>
-          </a>
-          <a href="/customerprofile" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: '#9ca3af', textDecoration: 'none' }}>
+          </div>
+          <div onClick={() => navigate("/customerprofile" , {state: {userProfile}})} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: '#9ca3af', textDecoration: 'none', cursor: 'pointer' }}>
             <User style={{ height: '24px', width: '24px' }} />
             <span style={{ fontSize: '12px', marginTop: '4px' }}>Profile</span>
-          </a>
+          </div>
         </nav>
       </footer>
     </div>

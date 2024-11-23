@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './CustomerLogin.css';
 import logo from '../../Assets/logo.svg';
 import customer from '../../Assets/passanger.webp';
+import CustomLogin from './CustomLogin';
 
 const CustomerLogin = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -40,7 +41,7 @@ const CustomerLogin = () => {
 
   return (
     <div className="min-h-screen bg-yellow-400 flex flex-col justify-center items-center p-4">
-      <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full">
+      {/* <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full">
         <div className="text-center mb-8">
           <img
             src={logo}
@@ -117,7 +118,9 @@ const CustomerLogin = () => {
             Sign up here
           </a>
         </div>
-      </div>
+      </div> */}
+
+      <CustomLogin />
 
       <div className="mt-8 text-black text-center">
         <p className="font-bold text-xl mb-2">India's Largest Bike Taxi Service</p>
