@@ -6,6 +6,8 @@ import Navbar from './Components/Navbar/Navbar';
 import RoutePlanner from './Components/RoutePlanner/RoutePlanner';
 import { DataProvider } from './Context/Context';
 
+export const BaseUrl = 'http://localhost:5000';
+
 const Home = React.lazy(() => import('./Components/Home/Home'));
 const About = React.lazy(() => import('./Components/About/About'));
 const Careers = React.lazy(() => import('./Components/Carrers/Careers'))
@@ -25,96 +27,101 @@ const CustomerProfile = React.lazy(() => import('./Components/Profile/customerpr
 
 function App() {
   const location = useLocation(); // Get the current route
+  // Define your multiple conditions
+  const shouldRenderNavbar = location.pathname !== '/route-planner' && location.pathname !== '/customerhome' && location.pathname !== '/customerprofile' && location.pathname !== '/customerlogin1';
+
   return (
-    <div>
+    <div className='app'>
       <DataProvider>
         {/* Render Navbar only if the current path is not '/route-planner' */}
-        {/* {location.pathname !== '/route-planner' && <Navbar />} */}
-        <Routes>
-          <Route path="/home" element={<Suspense fallback={<div className='suspense'> <ClipLoader
-            color={"#f9c935"}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          /></div>}> <Home /></Suspense>} />
-          <Route path="/about" element={<Suspense fallback={<div className='suspense'> <ClipLoader
-            color={"#f9c935"}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          /></div>}><About /></Suspense>} />
-          <Route path="/safety" element={<Suspense fallback={<div className='suspense'> <ClipLoader
-            color={"#f9c935"}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          /></div>}> <Safety /></Suspense>} />
-          <Route path="/careers" element={<Suspense fallback={<div className='suspense'> <ClipLoader
-            color={"#f9c935"}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          /></div>}> <Careers /></Suspense>} />
-          <Route path="/contact" element={<Suspense fallback={<div className='suspense'> <ClipLoader
-            color={"#f9c935"}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          /></div>}> <Contact /></Suspense>} />
-          <Route path="/login" element={<Suspense fallback={<div className='suspense'> <ClipLoader
-            color={"#f9c935"}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          /></div>}> <Login /></Suspense>} />
-          <Route path="/captainlogin" element={<Suspense fallback={<div className='suspense'> <ClipLoader
-            color={"#f9c935"}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          /></div>}> <CaptainLogin /></Suspense>} />
-          <Route path="/customerlogin" element={<Suspense fallback={<div className='suspense'> <ClipLoader
-            color={"#f9c935"}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          /></div>}> <CustomerLogin /></Suspense>} />
-          <Route path="/CaptainSignup" element={<Suspense fallback={<div className='suspense'> <ClipLoader
-            color={"#f9c935"}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          /></div>}> <CaptainSignup /></Suspense>} />
-          <Route
-            path="/customer-signup"
-            element={
-              <Suspense fallback={<div className='suspense'> <ClipLoader color="#f9c935" /> </div>}>
-                <CustomerSignup isOpen={true} onClose={() => console.log('Closed')} />
-              </Suspense>
-            }
-          />
-          <Route path="/register" element={<Suspense fallback={<div className='suspense'> <ClipLoader
-            color={"#f9c935"}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          /></div>}> <Register /></Suspense>} />
-          <Route path="/stripe" element={<Suspense fallback={<div className='suspense'> <ClipLoader
-            color={"#f9c935"}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          /></div>}> <Stripe /></Suspense>} />
-          <Route path="/captaindashboard" element={<Suspense fallback={<div className='suspense'> <ClipLoader
-          color={"#f9c935"}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        /></div>}> <Dashboard /></Suspense>} />
-        <Route path="/help" element={<Suspense fallback={<div className='suspense'> <ClipLoader
-            color={"#f9c935"}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          /></div>}> <Help /></Suspense>} />
-          <Route path = '/route-planner' element={<Suspense fallback={<div className='suspense'> <ClipLoader
-            color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <RoutePlanner /></Suspense>} />
-          <Route path = '/customerprofile' element={<Suspense fallback={<div className='suspense'> <ClipLoader
-            color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <CustomerProfile /></Suspense>} />
-            <Route path = '/customerhome' element={<Suspense fallback={<div className='suspense'> <ClipLoader
-            color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <CustomerHome /></Suspense>} />
-          {/* <Route path='route-planner' element={<RoutePlanner />} />
+        {shouldRenderNavbar && <Navbar />}
+        <div className={shouldRenderNavbar ? 'content' : ''}>
+          <Routes>
+            <Route path="/home" element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            /></div>}> <Home /></Suspense>} />
+            <Route path="/about" element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            /></div>}><About /></Suspense>} />
+            <Route path="/safety" element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            /></div>}> <Safety /></Suspense>} />
+            <Route path="/careers" element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            /></div>}> <Careers /></Suspense>} />
+            <Route path="/contact" element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            /></div>}> <Contact /></Suspense>} />
+            <Route path="/login" element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            /></div>}> <Login /></Suspense>} />
+            <Route path="/captainlogin" element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            /></div>}> <CaptainLogin /></Suspense>} />
+            <Route path="/customerlogin" element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            /></div>}> <CustomerLogin /></Suspense>} />
+            <Route path="/CaptainSignup" element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            /></div>}> <CaptainSignup /></Suspense>} />
+            <Route
+              path="/customer-signup"
+              element={
+                <Suspense fallback={<div className='suspense'> <ClipLoader color="#f9c935" /> </div>}>
+                  <CustomerSignup isOpen={true} onClose={() => console.log('Closed')} />
+                </Suspense>
+              }
+            />
+            <Route path="/register" element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            /></div>}> <Register /></Suspense>} />
+            <Route path="/stripe" element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            /></div>}> <Stripe /></Suspense>} />
+            <Route path="/captaindashboard" element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            /></div>}> <Dashboard /></Suspense>} />
+            <Route path="/help" element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            /></div>}> <Help /></Suspense>} />
+            <Route path='/route-planner' element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <RoutePlanner /></Suspense>} />
+            <Route path='/customerprofile' element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <CustomerProfile /></Suspense>} />
+            <Route path='/customerhome' element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <CustomerHome /></Suspense>} />
+            {/* <Route path='route-planner' element={<RoutePlanner />} />
           <Route path='/stripe' element={<Stripe />} />
           <Route path='/captaindashboard' element={<Dashboard />} />
           <Route path='/help' element={<Help />} /> */}
-        </Routes>
+          </Routes>
+        </div>
       </DataProvider>
     </div>
   )

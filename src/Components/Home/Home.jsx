@@ -38,7 +38,7 @@ const Home = () => {
               in more than 100 cities.
             </p>
             <div className="d-flex gap-2 gap-md-5 my-4 justify-content-center align-items-center">
-              <button className="home-btn" onClick={() => navigate("/CustomerSignup")}>Sign-up as Customer</button>
+              <button className="home-btn" onClick={() => navigate("/customer-signup")}>Sign-up as Customer</button>
               <button className="home-btn" onClick={() => navigate("/CaptainSignup")}>Sign-up as Driver</button>
             </div>
           </div>
