@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import { Motorcycle, Truck, Star, Phone } from 'react-feather';
+import { Truck, Star, Phone } from 'react-feather';
 import './CaptainSearch.css';
 
 // Fix for default marker icon
@@ -77,7 +77,7 @@ const CaptainSearch = ({ rideType, pickup, dropoff }) => {
               </div>
             </div>
             <div className="vehicle-info">
-              {rideType === 'bike' ? <Motorcycle className="icon" /> : <Truck className="icon" />}
+              {/* {rideType === 'bike' ? <Motorcycle className="icon" /> : <Truck className="icon" />} */}
               <span>{captain.vehicleNumber}</span>
             </div>
             <div className="ride-details">

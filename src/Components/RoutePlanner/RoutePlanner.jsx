@@ -37,6 +37,7 @@ function RoutePlanner() {
   const [duration, setDuration] = useState('')
   const [bikefare, setBikefare] = useState('')
   const [autofare, setAutofare] = useState('')
+  const [selectedVehicle, setSelectedVehicle] = useState('bike'); // Default to bike
 
   /** @type React.MutableRefObject<HTMLInputElement> */
   const originRef = useRef()
@@ -62,8 +63,8 @@ function RoutePlanner() {
     setDirectionsResponse(results)
     setDistance(results.routes[0].legs[0].distance.text)
     setDuration(results.routes[0].legs[0].duration.text)
-    setBikefare(() => calculateFare(distance,'bike', duration));
-    setAutofare(() => calculateFare(distance,'auto', duration));
+    setBikefare(() => calculateFare(distance, 'bike', duration));
+    setAutofare(() => calculateFare(distance, 'auto', duration));
   }
 
   function clearRoute() {
@@ -150,9 +151,38 @@ function RoutePlanner() {
             }}
           />
         </HStack>
-        <div style={{display: 'flex'}}>
-          <Text style={{width: '50%'}}>Bike: ₹{bikefare} </Text>
-          <Text>Auto: ₹{autofare} </Text>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+          {/* Radio Buttons to select Bike or Auto */}
+          <div style={{ marginBottom: '10px' }}>
+            <label>
+              <input
+                type="radio"
+                name="vehicle"
+                value="bike"
+                checked={selectedVehicle === 'bike'}
+                onChange={() => setSelectedVehicle('bike')}
+              />
+              Bike
+            </label>
+            <label style={{ marginLeft: '20px' }}>
+              <input
+                type="radio"
+                name="vehicle"
+                value="auto"
+                checked={selectedVehicle === 'auto'}
+                onChange={() => setSelectedVehicle('auto')}
+              />
+              Auto
+            </label>
+          </div>
+
+          {/* Display fare for selected vehicle */}
+          {selectedVehicle === 'bike' && (
+            <Text style={{ width: '50%' }}>Bike: ₹{bikefare}</Text>
+          )}
+          {selectedVehicle === 'auto' && (
+            <Text>Auto: ₹{autofare}</Text>
+          )}
         </div>
       </Box>
     </Flex>
