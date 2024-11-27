@@ -1,15 +1,52 @@
 import React, { useState } from 'react';
 import './CaptainLogin.css';
+import axios from 'axios';
 import logo from '../../Assets/logo.jpeg';
+import { useNavigate } from 'react-router-dom';
 
 const CaptainLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log('Login attempted with:', email, password);
+    setError(''); // Clear previous errors
+    setLoading(true); // Show loading state
+
+    const data = JSON.stringify({
+      email: email,
+      password: password,
+    });
+
+    const config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: 'http://localhost:5000/api/captains/login',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: data,
+    };
+
+    try {
+      const response = await axios.request(config);
+      if (response.data.result === 'Success') {
+        localStorage.setItem('token', response.data.token);
+        navigate('/captaindashboard');
+      }
+      if (response.data.result == 'Error') {
+        setError(() => response.data.message);
+        return;
+      }
+    } catch (error) {
+      console.error('Login failed:', error);
+      setError('Invalid email or password. Please try again.');
+    } finally {
+      setLoading(false); // End loading state
+    }
   };
 
   return (
@@ -24,10 +61,8 @@ const CaptainLogin = () => {
             className="mx-auto mb-4"
             style={{ width: '180px', height: '60px' }}
           />
-          <h1 className="text-2xl font-bold text-gray-800">Captain Login
-          </h1>
+          <h1 className="text-2xl font-bold text-gray-800">Captain Login</h1>
         </div>
-
 
         {/* Login Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -59,11 +94,16 @@ const CaptainLogin = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-black hover:bg-gray-800 text-white font-bold py-3 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105"
+            className={`w-full text-white font-bold py-3 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 ${loading ? 'bg-gray-400' : 'bg-black hover:bg-gray-800'
+              }`}
+            disabled={loading}
           >
-            Login
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
+
+        {/* Error Message */}
+        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
 
         {/* Forgot Password Link */}
         <div className="mt-4 text-center">
@@ -88,6 +128,6 @@ const CaptainLogin = () => {
       </div>
     </div>
   );
-}
+};
 
 export default CaptainLogin;

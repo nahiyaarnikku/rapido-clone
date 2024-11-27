@@ -19,6 +19,7 @@ import {
   DirectionsRenderer,
 } from '@react-google-maps/api'
 import { useRef, useState } from 'react'
+import { calculateFare } from '../../Utils/helper'
 
 const center = { lat: 28.7041, lng: 77.1025 }
 
@@ -34,6 +35,8 @@ function RoutePlanner() {
   const [directionsResponse, setDirectionsResponse] = useState(null)
   const [distance, setDistance] = useState('')
   const [duration, setDuration] = useState('')
+  const [bikefare, setBikefare] = useState('')
+  const [autofare, setAutofare] = useState('')
 
   /** @type React.MutableRefObject<HTMLInputElement> */
   const originRef = useRef()
@@ -59,6 +62,8 @@ function RoutePlanner() {
     setDirectionsResponse(results)
     setDistance(results.routes[0].legs[0].distance.text)
     setDuration(results.routes[0].legs[0].duration.text)
+    setBikefare(() => calculateFare(distance,'bike', duration));
+    setAutofare(() => calculateFare(distance,'auto', duration));
   }
 
   function clearRoute() {
@@ -145,9 +150,13 @@ function RoutePlanner() {
             }}
           />
         </HStack>
+        <div style={{display: 'flex'}}>
+          <Text style={{width: '50%'}}>Bike: ₹{bikefare} </Text>
+          <Text>Auto: ₹{autofare} </Text>
+        </div>
       </Box>
     </Flex>
   )
 }
 
-export default RoutePlanner
+export default RoutePlanner;

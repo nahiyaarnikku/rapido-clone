@@ -1,0 +1,133 @@
+.ride-cancelled {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.header h1 {
+  margin-left: 15px;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.cancellation-info {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.cancellation-icon {
+  background-color: #FFD700;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 20px;
+}
+
+.cancellation-icon .icon {
+  color: white;
+  width: 40px;
+  height: 40px;
+}
+
+.cancellation-info h2 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.cancellation-info p {
+  color: #666;
+}
+
+.cancellation-details {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.detail {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.detail:last-child {
+  margin-bottom: 0;
+}
+
+.detail .icon {
+  color: #FFD700;
+  margin-right: 15px;
+}
+
+.detail p {
+  margin: 0;
+  color: #333;
+}
+
+.actions {
+  margin-bottom: 30px;
+}
+
+.rebook-button {
+  width: 100%;
+  background-color: #FFD700;
+  border: none;
+  border-radius: 25px;
+  padding: 15px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.rebook-button:hover {
+  background-color: #FFC700;
+}
+
+.rebook-button .icon {
+  margin-right: 10px;
+}
+
+.support-info {
+  text-align: center;
+}
+
+.support-info p {
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.support-phone {
+  color: #FFD700;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.icon {
+  vertical-align: middle;
+}

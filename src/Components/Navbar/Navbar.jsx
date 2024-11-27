@@ -12,7 +12,7 @@ const Navbar = () => {
       const handleClose = ( ) => setShow(false);
     const handleShow = () => setShow(true);
     const nav = [ 
-        {link : "Home",path:"/"},
+        {link : "Home",path:"/home"},
         {link : "About Us",path:"/about"},
         {link : "Safety",path:"/safety"},
         {link : "Careers",path:"/careers"},

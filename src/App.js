@@ -5,6 +5,11 @@ import './App.css';
 import Navbar from './Components/Navbar/Navbar';
 import RoutePlanner from './Components/RoutePlanner/RoutePlanner';
 import { DataProvider } from './Context/Context';
+import CaptainApprovedRide from './Components/CaptainApprovedRide/CaptainApprovedRide';
+import CaptainRideRequest from './Components/CaptainRideRequest/CaptainRideRequest';
+import RouteAndPricingIndia from './Components/RouteAndPricingIndia/RouteAndPricingIndia';
+import CaptainRideStart from './Components/CaptainRideStart/CaptainRideStart';
+import CaptainSearch from './Components/CaptainSearch/CaptainSearch';
 
 export const BaseUrl = 'http://localhost:5000';
 
@@ -28,7 +33,7 @@ const CustomerProfile = React.lazy(() => import('./Components/Profile/customerpr
 function App() {
   const location = useLocation(); // Get the current route
   // Define your multiple conditions
-  const shouldRenderNavbar = location.pathname !== '/route-planner' && location.pathname !== '/customerhome' && location.pathname !== '/customerprofile' && location.pathname !== '/customerlogin1';
+  const shouldRenderNavbar = location.pathname !== '/route-planner' && location.pathname !== '/customerhome' && location.pathname !== '/customerprofile' && location.pathname !== '/captain-approved-ride';
 
   return (
     <div className='app'>
@@ -116,10 +121,16 @@ function App() {
               color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <CustomerProfile /></Suspense>} />
             <Route path='/customerhome' element={<Suspense fallback={<div className='suspense'> <ClipLoader
               color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <CustomerHome /></Suspense>} />
-            {/* <Route path='route-planner' element={<RoutePlanner />} />
-          <Route path='/stripe' element={<Stripe />} />
-          <Route path='/captaindashboard' element={<Dashboard />} />
-          <Route path='/help' element={<Help />} /> */}
+            <Route path='/captain-approved-ride' element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <CaptainApprovedRide /></Suspense>} />
+            <Route path='/captain-ride-request' element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <CaptainRideRequest /></Suspense>} />
+            <Route path='/captain-ride-start' element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <CaptainRideStart /></Suspense>} />
+            <Route path='/route-and-pricing-india' element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <RouteAndPricingIndia /></Suspense>} />
+            <Route path='/captain-search' element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <CaptainSearch /></Suspense>} />
           </Routes>
         </div>
       </DataProvider>

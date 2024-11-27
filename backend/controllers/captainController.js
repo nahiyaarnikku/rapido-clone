@@ -11,8 +11,10 @@ const registerCaptain = asyncHandler(async (req, res) => {
     // Check if captain already exists
     const existingCaptain = await Captain.findOne({ email });
     if (existingCaptain) {
-        res.status(400);
-        throw new Error('Captain already exists');
+        res.json({
+            result: "Error",
+            message: "Captain already exists"
+        })
     }
 
     // Create new captain
@@ -26,6 +28,8 @@ const registerCaptain = asyncHandler(async (req, res) => {
 
     if (captain) {
         res.status(201).json({
+            result: "Success",
+            message: "Captain registered successfully",
             _id: captain._id,
             name: captain.name,
             email: captain.email,
@@ -34,8 +38,10 @@ const registerCaptain = asyncHandler(async (req, res) => {
             token: generateToken(captain._id),
         });
     } else {
-        res.status(400);
-        throw new Error('Invalid captain data');
+        res.json({
+            result: "Error",
+            message: "Invalid captain data"
+        })
     }
 });
 
@@ -50,6 +56,8 @@ const loginCaptain = asyncHandler(async (req, res) => {
 
     if (captain && (await captain.matchPassword(password))) {
         res.json({
+            result: "Success",
+            message: "Captain logged in successfully",
             _id: captain._id,
             name: captain.name,
             email: captain.email,
@@ -58,8 +66,10 @@ const loginCaptain = asyncHandler(async (req, res) => {
             token: generateToken(captain._id),
         });
     } else {
-        res.status(401);
-        throw new Error('Invalid email or password');
+        res.json({
+            result: "Error",
+            message: "Email or Password incorrect"
+        })
     }
 });
 

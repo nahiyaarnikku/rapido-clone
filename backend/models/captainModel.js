@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const captainSchema = mongoose.Schema(
     {
@@ -53,5 +54,16 @@ const captainSchema = mongoose.Schema(
     },
     { timestamps: true }
 );
+captainSchema.methods.matchPassword = async function (enteredPassword) {
+    // return await bcrypt.compare(enteredPassword, this.password);
+    if(enteredPassword === this.password) return true;
+    else return false;
+};
+
+captainSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) return next();
+    this.password = await bcrypt.hash(this.password, 10);
+    next();
+});
 
 module.exports = mongoose.model('Captain', captainSchema);
