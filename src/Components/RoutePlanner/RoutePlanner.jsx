@@ -48,6 +48,22 @@ function RoutePlanner() {
     return <SkeletonText />
   }
 
+  // const geocoder = new google.maps.Geocoder()  // Geocoder instance
+
+  // // Function to get lat, lng of an address
+  // const geocodeAddress = async (address) => {
+  //   return new Promise((resolve, reject) => {
+  //     geocoder.geocode({ address: address }, (results, status) => {
+  //       if (status === google.maps.GeocoderStatus.OK) {
+  //         const latLng = results[0].geometry.location;
+  //         resolve({ lat: latLng.lat(), lng: latLng.lng() });
+  //       } else {
+  //         reject('Geocode failed: ' + status);
+  //       }
+  //     });
+  //   });
+  // };
+
   async function calculateRoute() {
     if (originRef.current.value === '' || destiantionRef.current.value === '') {
       return
@@ -60,6 +76,10 @@ function RoutePlanner() {
       // eslint-disable-next-line no-undef
       travelMode: google.maps.TravelMode.DRIVING,
     })
+    const originLatLng = results.routes[0].legs[0].start_location
+    const destinationLatLng = results.routes[0].legs[0].end_location
+    console.log(JSON.stringify(originLatLng, null, 2))
+    console.log(JSON.stringify(destinationLatLng, null, 2))
     setDirectionsResponse(results)
     setDistance(results.routes[0].legs[0].distance.text)
     setDuration(results.routes[0].legs[0].duration.text)

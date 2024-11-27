@@ -24,12 +24,10 @@ const captainSchema = mongoose.Schema(
             type: Number,
             default: 0,
         },
-        approvedRides: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Ride',
-            },
-        ],
+        approvedRides: {
+            type: Number,
+            default: 0,
+        },
         rating: {
             type: Number,
             default: 0,
@@ -55,9 +53,9 @@ const captainSchema = mongoose.Schema(
     { timestamps: true }
 );
 captainSchema.methods.matchPassword = async function (enteredPassword) {
-    // return await bcrypt.compare(enteredPassword, this.password);
-    if(enteredPassword === this.password) return true;
-    else return false;
+    return await bcrypt.compare(enteredPassword, this.password);
+    // if (enteredPassword === this.password) return true;
+    // else return false;
 };
 
 captainSchema.pre('save', async function (next) {
