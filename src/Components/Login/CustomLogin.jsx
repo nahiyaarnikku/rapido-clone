@@ -54,6 +54,7 @@ function CustomLogin() {
                 .then((response) => {
                     if (response.data.result === 'Success') {
                         localStorage.setItem('token', response.data.message.token);
+                        localStorage.setItem('loginCustomer', JSON.stringify(response.data));
                         navigate('/customerhome');
                     }
                     if(response.data.result == 'Error'){

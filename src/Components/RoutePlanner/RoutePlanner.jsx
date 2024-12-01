@@ -81,10 +81,11 @@ function RoutePlanner() {
   }
 
   const handleBooking = () => {
-    console.log(pickup);
-    console.log(dropoff);
+    let ridefare = null;
+    if (selectedVehicle === 'bike') ridefare = bikefare;
+    if (selectedVehicle === 'auto') ridefare = autofare;
     navigate('/captain-search', {
-      state: { rideType: selectedVehicle, distance, duration, pickup, dropoff },
+      state: { rideType: selectedVehicle, ridefare, distance, duration, pickup, dropoff, origin: originRef.current.value, destination: destiantionRef.current.value },
     });
   };
 

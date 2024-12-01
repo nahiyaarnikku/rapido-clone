@@ -28,6 +28,39 @@ const CaptainSearch = () => {
 
   const center = { lat: 28.679079, lng: 77.069710 }; // delhi center
 
+  const bookRide = async (id) => {
+    const loginCustomer = JSON.parse(localStorage.getItem('loginCustomer'));
+    // console.log(loginCustomer.message);
+    let data = JSON.stringify({
+      "userId": loginCustomer.message._id,
+      "captainId": id,
+      "startLocation": state.origin,
+      "endLocation": state.destination,
+      "price": state.ridefare,
+      "time": state.duration,
+      "distance": state.distance
+    });
+
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: BaseUrl + '/api/rides/book',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: data
+    };
+
+    axios.request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        localStorage.setItem('bookedRide', JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   useEffect(() => {
     // Parse the pickup and dropoff locations from JSON
     setRideType(state.rideType);
@@ -58,6 +91,7 @@ const CaptainSearch = () => {
           const randomCaptain = captains[randomIndex];
           setCaptain(randomCaptain);
           console.log(randomCaptain);
+          bookRide(randomCaptain._id);
         }
         setIsSearching(false);
       })
@@ -134,10 +168,10 @@ const CaptainSearch = () => {
             </div>
             <div className="ride-details">
               <div className="detail">
-                <strong>Pickup:</strong> {pickup ? `${pickup.lat}, ${pickup.lng}` : 'N/A'}
+                <strong>Pickup:</strong> {pickup ? `${state.origin}` : 'N/A'}
               </div>
               <div className="detail">
-                <strong>Drop:</strong> {dropoff ? `${dropoff.lat}, ${dropoff.lng}` : 'N/A'}
+                <strong>Drop:</strong> {dropoff ? `${state.destination}` : 'N/A'}
               </div>
             </div>
             <button className="contact-captain">
