@@ -60,6 +60,7 @@ const CaptainRideStart = () => {
     e.preventDefault();
     // get otp
     const customerOtp = JSON.parse(localStorage.getItem('otp'));
+    console.log('customerOtp', customerOtp)
     // In a real application, you would verify the OTP with your backend here
     if (otp == customerOtp) { // Example OTP
       onStartRide();
