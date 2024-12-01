@@ -35,7 +35,7 @@ const CustomerProfile = React.lazy(() => import('./Components/Profile/customerpr
 function App() {
   const location = useLocation(); // Get the current route
   // Define your multiple conditions
-  const shouldRenderNavbar = location.pathname !== '/route-planner' && location.pathname !== '/customerhome' && location.pathname !== '/customerprofile' && location.pathname !== '/captain-approved-ride' && location.pathname !== '/captain-search';
+  const shouldRenderNavbar = location.pathname !== '/route-planner' && location.pathname !== '/customerhome' && location.pathname !== '/customerprofile' && location.pathname !== '/captain-approved-ride' && location.pathname !== '/captain-search' && location.pathname !== '/captaindashboard';
 
   return (
     <div className='app'>
