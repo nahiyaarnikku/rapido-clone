@@ -1,0 +1,154 @@
+.ride-booked {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Roboto', sans-serif;
+}
+
+.map-container {
+  flex: 1;
+  position: relative;
+}
+
+.map-container .leaflet-container {
+  height: 100%;
+  width: 100%;
+}
+
+.booking-details {
+  background-color: white;
+  padding: 1.5rem;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.booking-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.booking-header h2 {
+  font-size: 1.5rem;
+  color: #FFD700;
+  margin-bottom: 0.5rem;
+}
+
+.eta {
+  font-size: 1rem;
+  color: #333;
+}
+
+.captain-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.captain-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 1rem;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+}
+
+.star {
+  color: #FFD700;
+  margin-right: 0.25rem;
+}
+
+.total-rides {
+  font-size: 0.8rem;
+  color: #666;
+  margin-left: 0.5rem;
+}
+
+.vehicle-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+}
+
+.vehicle-info .icon {
+  margin-right: 0.5rem;
+  color: #FFD700;
+}
+
+.ride-details {
+  margin-bottom: 1rem;
+}
+
+.detail {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.detail .icon {
+  margin-right: 0.5rem;
+  color: #FFD700;
+  margin-top: 0.25rem;
+}
+
+.detail strong {
+  display: block;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.detail p {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.price-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+}
+
+.price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.contact-captain {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #FFD700;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #000;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.contact-captain:hover {
+  background-color: #FFC700;
+}
+
+.contact-captain .icon {
+  margin-right: 0.5rem;
+}
+
+.safety-tip {
+  margi

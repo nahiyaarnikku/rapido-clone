@@ -1,0 +1,198 @@
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #F0F0F0;
+  margin: 0;
+  padding: 0;
+}
+
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.bg-yellow-400 {
+  background-color: #fcd34d;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+.bg-white {
+  background-color: #fff;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.shadow-xl {
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.p-8 {
+  padding: 2rem;
+}
+
+.max-w-md {
+  max-width: 28rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.text-gray-800 {
+  color: #1f2937;
+}
+
+.space-y-4 > * + * {
+  margin-top: 1rem;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.bg-yellow-400 {
+  background-color: #fcd34d;
+}
+
+.hover\:bg-yellow-500:hover {
+  background-color: #fbbf24;
+}
+
+.text-black {
+  color: #000;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.transition {
+  transition: all 0.3s ease-in-out;
+}
+
+.duration-300 {
+  transition-duration: 300ms;
+}
+
+.ease-in-out {
+  transition-timing-function: ease-in-out;
+}
+
+.transform {
+  transform: scale(1);
+}
+
+.hover\:scale-105:hover {
+  transform: scale(1.05);
+}
+
+.flex.items-center {
+  display: flex;
+  align-items: center;
+}
+
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
+.bg-black {
+  background-color: #000;
+}
+
+.hover\:bg-gray-800:hover {
+  background-color: #1f2937;
+}
+
+.text-white {
+  color: #fff;
+}
+
+.mt-8 {
+  margin-top: 2rem;
+}
+
+.text-gray-600 {
+  color: #4b5563;
+}
+
+.text-yellow-600 {
+  color: #d97706;
+}
+
+.hover\:text-yellow-700:hover {
+  color: #b45309;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.text-black {
+  color: #000;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}

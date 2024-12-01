@@ -1,0 +1,179 @@
+.after-ride-end {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  padding: 20px;
+  color: #333;
+}
+
+.ride-summary {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ride-summary h1 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #FFD700;
+}
+
+.route-info {
+  margin-bottom: 15px;
+}
+
+.location {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.location .icon {
+  color: #FFD700;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+
+.location .label {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 2px;
+}
+
+.ride-stats {
+  display: flex;
+  justify-content: space-around;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+}
+
+.stat .icon {
+  color: #FFD700;
+  margin-right: 5px;
+}
+
+.fare-breakdown {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.fare-breakdown h2 {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.fare-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.fare-item.total {
+  font-weight: bold;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+.payment-section {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.payment-section h2 {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.pay-button {
+  width: 100%;
+  background-color: #FFD700;
+  border: none;
+  border-radius: 25px;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pay-button:hover {
+  background-color: #FFC700;
+}
+
+.pay-button .icon {
+  margin-right: 10px;
+}
+
+.captain-rating {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.captain-rating h2 {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.rating-stars {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.star {
+  color: #ddd;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.star.filled {
+  color: #FFD700;
+}
+
+.tip-button {
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #333;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin: 0 auto;
+  transition: background-color 0.3s;
+}
+
+.tip-button:hover {
+  background-color: #e0e0e0;
+}
+
+.tip-button .icon {
+  margin-right: 5px;
+}
+
+.icon {
+  vertical-align: middle;
+}
