@@ -58,8 +58,10 @@ const CaptainRideStart = () => {
 
   const handleOtpSubmit = (e) => {
     e.preventDefault();
+    // get otp
+    const customerOtp = JSON.parse(localStorage.getItem('otp'));
     // In a real application, you would verify the OTP with your backend here
-    if (otp === '1234') { // Example OTP
+    if (otp == customerOtp) { // Example OTP
       onStartRide();
     } else {
       setOtpError('Invalid OTP. Please try again.');

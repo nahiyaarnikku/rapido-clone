@@ -19,7 +19,7 @@ L.Icon.Default.mergeOptions({
 const CaptainSearch = () => {
   const { state } = useLocation(); // Access the state passed from navigate()
   const [isSearching, setIsSearching] = useState(true);
-  const [captain, setCaptain] = useState(null);
+  const [captain, setCaptain] = useState({});
   const [captainLocation, setCaptainLocation] = useState(null);
   const [error, setError] = useState(null);
   const [pickup, setPickup] = useState({});
@@ -29,12 +29,12 @@ const CaptainSearch = () => {
 
   const center = { lat: 28.679079, lng: 77.069710 }; // delhi center
 
-  const bookRide = async (id) => {
+  const bookRide = async (randomeCaptain) => {
     const loginCustomer = JSON.parse(localStorage.getItem('loginCustomer'));
     // console.log(loginCustomer.message);
     let data = JSON.stringify({
       "userId": loginCustomer.message._id,
-      "captainId": id,
+      "captainId": randomeCaptain._id,
       "startLocation": state.origin,
       "endLocation": state.destination,
       "price": state.ridefare,
@@ -57,7 +57,7 @@ const CaptainSearch = () => {
         localStorage.setItem('bookedRide', JSON.stringify(response.data));
         // check if ride approved from captain
         // console.log(captain);
-        checkRideStatus(response.data._id, captain);
+        checkRideStatus(response.data._id, randomeCaptain);
       })
       .catch((error) => {
         console.log(error);
@@ -92,9 +92,9 @@ const CaptainSearch = () => {
           const randomIndex = Math.floor(Math.random() * captains.length);
           // Select the random captain object
           const randomCaptain = captains[randomIndex];
-          setCaptain(randomCaptain);
-          console.log(randomCaptain);
-          bookRide(randomCaptain._id);
+          setCaptain(() => ({ ...randomCaptain }));
+          console.log(captain);
+          bookRide(randomCaptain);
         }
         // setIsSearching(false);
       })
@@ -131,6 +131,7 @@ const CaptainSearch = () => {
       axios.request(config)
         .then((response) => {
           if (response.data.status === 'approved') {
+            generateOTP();
             setIsSearching(false);
           }
           if (response.data.status === 'started') {
@@ -143,8 +144,11 @@ const CaptainSearch = () => {
     }, 10000)
   }
 
-  const saveRideDetails = () => {
-    console.log(captain)
+  function generateOTP() {
+    // Generate a random 4-digit number
+    const otp = Math.floor(1000 + Math.random() * 9000);
+    localStorage.setItem('otp', JSON.stringify(otp));
+    // return otp;
   }
 
   return (
@@ -225,6 +229,7 @@ const CaptainSearch = () => {
               {captain.phone}
             </button>
             <p className="eta">Your captain is {Math.floor(Math.random() * 10)} mins away</p>
+            <p className="eta">Your Otp is {JSON.parse(localStorage.getItem('otp'))}</p>
           </div>
         ) : (
           <div className="no-captain">
