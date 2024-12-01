@@ -50,6 +50,7 @@ const loginUser = asyncHandler(async (req, res) => {
                 name: user.name,
                 email: user.email,
                 wallet: user.wallet,
+                phone: user.phone,
                 token: generateToken(user._id),
             },
         });

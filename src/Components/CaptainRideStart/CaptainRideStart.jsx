@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { MapPin, Phone, MessageCircle, User, Clock, CreditCard, Check } from 'react-feather';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
+import { BaseUrl } from '../../App';
 
 // Fix for default marker icon
 delete L.Icon.Default.prototype._getIconUrl;
@@ -12,26 +15,43 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 
-const CaptainRideStart = ({ rideDetails, onStartRide }) => {
-  rideDetails = {
-    customerName: "John Doe",
-    customerPhone: "+1 555-123-4567",
-    pickup: "123 Main Street, Springfield",
-    dropoff: "456 Elm Street, Shelbyville",
-    distance: 15.2, // distance in kilometers
-    estimatedFare: 25.50 // estimated fare in dollars
-  };
+const CaptainRideStart = () => {
+  const { state } = useLocation();
   const [showChat, setShowChat] = useState(false);
   const [otp, setOtp] = useState('');
   const [otpError, setOtpError] = useState('');
-  const { customerName, customerPhone, pickup, dropoff, distance, estimatedFare } = rideDetails;
+  const [rideRequested, setRideRequested] = useState({})
 
   // For demonstration, we'll use fixed coordinates. In a real app, these would be dynamic.
   const pickupLocation = [12.9815, 77.6094];
 
-  const handleCall = () => {
-    window.location.href = `tel:${customerPhone}`;
-  };
+  // const handleCall = () => {
+  //   window.location.href = `tel:${customerPhone}`;
+  // };
+
+  const onStartRide = () => {
+    let data = JSON.stringify({
+      "status": "started",
+    });
+
+    let config = {
+      method: 'put',
+      maxBodyLength: Infinity,
+      url: BaseUrl + '/api/rides/update/' + state.id,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: data
+    };
+
+    axios.request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   const handleOtpSubmit = (e) => {
     e.preventDefault();
@@ -42,6 +62,33 @@ const CaptainRideStart = ({ rideDetails, onStartRide }) => {
       setOtpError('Invalid OTP. Please try again.');
     }
   };
+
+  useEffect(() => {
+    if (state.id) {
+      const loginCustomer = JSON.parse(localStorage.getItem('loginCustomer'));
+      const data = {};
+      data.customerName = loginCustomer.message.name
+      data.customerPhone = loginCustomer.message.phone
+      let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: BaseUrl + '/api/rides/' + state.id,
+        headers: {}
+      };
+
+      axios.request(config)
+        .then((response) => {
+          data.pickup = response.data.startLocation;
+          data.dropoff = response.data.endLocation;
+          data.distance = response.data.distance;
+          data.estimatedFare = response.data.price;
+          setRideRequested(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [state])
 
   return (
     <div className="captain-ride-start">
@@ -62,7 +109,7 @@ const CaptainRideStart = ({ rideDetails, onStartRide }) => {
 
         <div className="customer-info">
           <User className="icon" />
-          <span>{customerName}</span>
+          <span>{rideRequested.customerName}</span>
         </div>
 
         <div className="location-info">
@@ -70,14 +117,14 @@ const CaptainRideStart = ({ rideDetails, onStartRide }) => {
             <MapPin className="icon" />
             <div>
               <p className="label">Pickup</p>
-              <p>{pickup}</p>
+              <p>{rideRequested.pickup}</p>
             </div>
           </div>
           <div className="location">
             <MapPin className="icon" />
             <div>
               <p className="label">Drop-off</p>
-              <p>{dropoff}</p>
+              <p>{rideRequested.dropoff}</p>
             </div>
           </div>
         </div>
@@ -85,18 +132,18 @@ const CaptainRideStart = ({ rideDetails, onStartRide }) => {
         <div className="ride-stats">
           <div className="stat">
             <Clock className="icon" />
-            <p>{distance} km</p>
+            <p>{rideRequested.distance}</p>
           </div>
           <div className="stat">
             <CreditCard className="icon" />
-            <p>₹{estimatedFare}</p>
+            <p>₹{rideRequested.estimatedFare}</p>
           </div>
         </div>
 
         <div className="action-buttons">
-          <button className="call-button" onClick={handleCall}>
+          <button className="call-button">
             <Phone className="icon" />
-            Call Customer
+            {rideRequested.customerPhone}
           </button>
           <button className="chat-button" onClick={() => setShowChat(!showChat)}>
             <MessageCircle className="icon" />
@@ -106,7 +153,7 @@ const CaptainRideStart = ({ rideDetails, onStartRide }) => {
 
         {showChat && (
           <div className="chat-window">
-            <h3>Chat with {customerName}</h3>
+            <h3>Chat with {rideRequested.customerName}</h3>
             <div className="chat-messages">
               {/* Chat messages would go here */}
             </div>

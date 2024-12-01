@@ -1,10 +1,11 @@
 const Ride = require('../models/rideModel');
 const User = require('../models/userModel');
 const Captain = require('../models/captainModel');
+const asyncHandler = require('express-async-handler');
 
 // Book a ride
 const bookRide = async (req, res) => {
-    const { userId,captainId, startLocation, endLocation, price, time, distance } = req.body;
+    const { userId, captainId, startLocation, endLocation, price, time, distance } = req.body;
     try {
         // Check if captain exists
         const captain = await Captain.findById(captainId);
@@ -103,7 +104,30 @@ const cancelRide = async (req, res) => {
     }
 };
 
+// get all rides, for now it is for all
+const findRides = asyncHandler(async (req, res) => {
+    // const { vehicleType } = req.query;
+
+    // if (!vehicleType || !['auto', 'bike'].includes(vehicleType.toLowerCase())) {
+    //     return res.json({ message: 'Invalid or missing vehicle type. Use "auto" or "bike".' });
+    // }
+
+    const rides = await Ride.find({ 'status': 'pending' });
+
+    if (rides.length === 0) {
+        return res.json({ message: 'No rides available' });
+    }
+
+    res.status(200).json({
+        result: "Success",
+        count: rides.length,
+        message: 'Rides available',
+        data: rides,
+    });
+});
+
 module.exports = {
+    findRides,
     bookRide,
     updateRideStatus,
     getRideDetails,
