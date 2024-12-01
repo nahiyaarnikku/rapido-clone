@@ -4,6 +4,9 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { MapPin, Clock, CreditCard, User, Check, X } from 'react-feather';
 import './CaptainRideRequest.css';
+import { useLocation } from 'react-router-dom';
+import { BaseUrl } from '../../App';
+import axios from 'axios';
 
 // Fix for default marker icon
 delete L.Icon.Default.prototype._getIconUrl;
@@ -13,17 +16,11 @@ L.Icon.Default.mergeOptions({
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 
-const CaptainRideRequest = ({ rideRequest, onApprove, onDecline }) => {
+const CaptainRideRequest = () => {
+  const { state } = useLocation();
   const [timeLeft, setTimeLeft] = useState(30);
-  // const { customerName, pickup, dropoff, distance, estimatedFare } = rideRequest;
-  const rideRequest2 = {
-    customerName: "John Doe",
-    pickup: "Location A",
-    dropoff: "Location B",
-    distance: 15.5,
-    estimatedFare: 120.00
-  };
-  const { customerName, pickup, dropoff, distance, estimatedFare } = rideRequest2;
+  const [rideRequested, setRideRequested] = useState({})
+  // const { customerName, pickup, dropoff, distance, estimatedFare } = rideRequest2;
   const center = { lat: 12.9716, lng: 77.5946 }; // Bangalore center
 
   useEffect(() => {
@@ -32,6 +29,34 @@ const CaptainRideRequest = ({ rideRequest, onApprove, onDecline }) => {
       return () => clearTimeout(timerId);
     }
   }, [timeLeft]);
+
+  useEffect(() => {
+    if (state.id) {
+      const loginCustomer = JSON.parse(localStorage.getItem('loginCustomer'));
+      const data = {};
+      data.customerName = loginCustomer.message.name
+      let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: BaseUrl + '/api/rides/' + state.id,
+        headers: {}
+      };
+
+      axios.request(config)
+        .then((response) => {
+          data.pickup = response.data.startLocation;
+          data.dropoff = response.data.endLocation;
+          data.distance = response.data.distance;
+          data.estimatedFare = response.data.price;
+          setRideRequested(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [state])
+
+  const updateRideStatus = (status) => {}
 
   return (
     <div className="captain-ride-request">
@@ -54,7 +79,7 @@ const CaptainRideRequest = ({ rideRequest, onApprove, onDecline }) => {
 
         <div className="customer-info">
           <User className="icon" />
-          <span>{customerName}</span>
+          <span>{rideRequested.customerName}</span>
         </div>
 
         <div className="location-info">
@@ -62,14 +87,14 @@ const CaptainRideRequest = ({ rideRequest, onApprove, onDecline }) => {
             <MapPin className="icon" />
             <div>
               <p className="label">Pickup</p>
-              <p>{pickup}</p>
+              <p>{rideRequested.pickup}</p>
             </div>
           </div>
           <div className="location">
             <MapPin className="icon" />
             <div>
               <p className="label">Drop-off</p>
-              <p>{dropoff}</p>
+              <p>{rideRequested.dropoff}</p>
             </div>
           </div>
         </div>
@@ -77,11 +102,11 @@ const CaptainRideRequest = ({ rideRequest, onApprove, onDecline }) => {
         <div className="ride-stats">
           <div className="stat">
             <Clock className="icon" />
-            <p>{distance} km</p>
+            <p>{rideRequested.distance}</p>
           </div>
           <div className="stat">
             <CreditCard className="icon" />
-            <p>₹{estimatedFare}</p>
+            <p>₹{rideRequested.estimatedFare}</p>
           </div>
         </div>
 
@@ -90,11 +115,11 @@ const CaptainRideRequest = ({ rideRequest, onApprove, onDecline }) => {
         </div>
 
         <div className="action-buttons">
-          <button className="approve-button" onClick={onApprove}>
+          <button className="approve-button" onClick={updateRideStatus}>
             <Check className="icon" />
             Approve
           </button>
-          <button className="decline-button" onClick={onDecline}>
+          <button className="decline-button" onClick={updateRideStatus}>
             <X className="icon" />
             Decline
           </button>

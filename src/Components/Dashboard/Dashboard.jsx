@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Line, Bar } from 'react-chartjs-2';
 import { format, subDays, addHours } from 'date-fns';
-import { 
+import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
@@ -12,6 +12,9 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { BaseUrl } from '../../App';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 ChartJS.register(
   CategoryScale,
@@ -48,11 +51,18 @@ const fetchData = async (period) => {
 const fetchUpcomingRides = async () => {
   await new Promise(resolve => setTimeout(resolve, 300));
   const now = new Date();
-  return [
-    { id: 1, pickup: "Central Park", dropoff: "Times Square", time: addHours(now, 1) },
-    { id: 2, pickup: "Brooklyn Bridge", dropoff: "Statue of Liberty", time: addHours(now, 2) },
-    { id: 3, pickup: "Grand Central Station", dropoff: "Empire State Building", time: addHours(now, 3) },
-  ];
+  let config = {
+    method: 'get',
+    maxBodyLength: Infinity,
+    url: BaseUrl + '/api/rides/find',
+    headers: {}
+  };
+
+  let response = await axios.request(config);
+  response = response.data;
+  // console.log(response.data);
+  const reversedData = [...response.data].reverse()
+  return reversedData;
 };
 
 const CaptainDashboard = () => {
@@ -60,6 +70,7 @@ const CaptainDashboard = () => {
   const [data, setData] = useState([]);
   const [upcomingRides, setUpcomingRides] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadData = async () => {
@@ -104,6 +115,37 @@ const CaptainDashboard = () => {
     ]
   };
 
+  // Convert database timestamps to dates
+  function convertToAMPM(isoString) {
+    const date = new Date(isoString); // Convert the ISO string to a Date object
+
+    let hours = date.getHours(); // Get the hours in 24-hour format
+    const minutes = date.getMinutes(); // Get the minutes
+    let period = 'AM';
+
+    // Convert 24-hour format to 12-hour format
+    if (hours >= 12) {
+      period = 'PM';
+      if (hours > 12) hours -= 12; // Convert hours to 12-hour format
+    }
+    if (hours === 0) {
+      hours = 12; // Handle midnight (00:00) case
+    }
+
+    // Format the minutes to always be two digits
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+
+    // Return the formatted time in "hh:mm AM/PM" format
+    return `${hours}:${formattedMinutes} ${period}`;
+  }
+
+  function handleRide(id){
+    console.log(id);
+    navigate('/captain-ride-start', {
+      state: {id}
+    })    
+  }
+
   return (
     <div style={styles.container}>
       <header style={styles.header}>
@@ -114,10 +156,10 @@ const CaptainDashboard = () => {
           <h2 style={styles.sectionTitle}>Upcoming Rides</h2>
           <div style={styles.upcomingRidesGrid}>
             {upcomingRides.map((ride) => (
-              <div key={ride.id} style={styles.upcomingRideCard}>
-                <div style={styles.upcomingRideTime}>{format(ride.time, 'h:mm a')}</div>
-                <div>Pickup: {ride.pickup}</div>
-                <div>Dropoff: {ride.dropoff}</div>
+              <div key={ride._id} style={styles.upcomingRideCard} onClick={() => handleRide(ride._id)}>
+                <div style={styles.upcomingRideTime}>{convertToAMPM(ride.createdAt)}</div>
+                <div>Pickup: {ride.startLocation}</div>
+                <div>Dropoff: {ride.endLocation}</div>
               </div>
             ))}
           </div>
@@ -125,8 +167,8 @@ const CaptainDashboard = () => {
 
         <section style={styles.overviewSection}>
           <h2 style={styles.sectionTitle}>Overview</h2>
-          <select 
-            value={period} 
+          <select
+            value={period}
             onChange={(e) => setPeriod(e.target.value)}
             style={styles.periodSelect}
           >
@@ -280,6 +322,7 @@ const styles = {
     borderRadius: '0.5rem',
     boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
     transition: 'transform 0.3s ease-in-out',
+    cursor: 'pointer',
     ':hover': {
       transform: 'translateY(-5px)',
     },
