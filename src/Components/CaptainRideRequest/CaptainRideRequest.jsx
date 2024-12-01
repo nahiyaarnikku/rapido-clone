@@ -15,7 +15,15 @@ L.Icon.Default.mergeOptions({
 
 const CaptainRideRequest = ({ rideRequest, onApprove, onDecline }) => {
   const [timeLeft, setTimeLeft] = useState(30);
-  const { customerName, pickup, dropoff, distance, estimatedFare } = rideRequest;
+  // const { customerName, pickup, dropoff, distance, estimatedFare } = rideRequest;
+  const rideRequest2 = {
+    customerName: "John Doe",
+    pickup: "Location A",
+    dropoff: "Location B",
+    distance: 15.5,
+    estimatedFare: 120.00
+  };
+  const { customerName, pickup, dropoff, distance, estimatedFare } = rideRequest2;
   const center = { lat: 12.9716, lng: 77.5946 }; // Bangalore center
 
   useEffect(() => {
@@ -43,7 +51,7 @@ const CaptainRideRequest = ({ rideRequest, onApprove, onDecline }) => {
 
       <div className="ride-details">
         <h1>New Ride Request</h1>
-        
+
         <div className="customer-info">
           <User className="icon" />
           <span>{customerName}</span>

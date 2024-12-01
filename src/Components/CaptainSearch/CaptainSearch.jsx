@@ -5,6 +5,8 @@ import L from 'leaflet';
 import { Truck, Star, Phone } from 'react-feather';
 import './CaptainSearch.css';
 import { useLocation } from 'react-router-dom';
+import { BaseUrl } from '../../App';
+import axios from 'axios';
 
 // Fix for default marker icon
 delete L.Icon.Default.prototype._getIconUrl;
@@ -31,19 +33,39 @@ const CaptainSearch = () => {
     setRideType(state.rideType);
     setPickup(JSON.parse(state.pickup));
     setDropoff(JSON.parse(state.dropoff));
-    // Simulate the fetch for now
-    setCaptain({
-      name: "Mukund Kumar",
-      rating: 4,
-      totalRides: 5,
-      vehicleNumber: "test123",
-      phoneNumber: 8076872127,
-      lat: 28.6965029,
-      lng: 77.0647717,
-    });
-    console.log(pickup, dropoff)
-    setIsSearching(false);
   }, [state]);
+
+  useEffect(() => {
+    if (!rideType) return;
+    let data = '';
+
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: BaseUrl + '/api/captains/find-by-vehicle?vehicleType=' + rideType,
+      headers: {},
+      data: data
+    };
+
+    axios.request(config)
+      .then((result) => {
+        let response = result.data;
+        if (response.result === 'Success') {
+          let captains = response.data;
+          // Get a random index based on the length of the array
+          const randomIndex = Math.floor(Math.random() * captains.length);
+          // Select the random captain object
+          const randomCaptain = captains[randomIndex];
+          setCaptain(randomCaptain);
+          console.log(randomCaptain);
+        }
+        setIsSearching(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsSearching(false);
+      });
+  }, [rideType])
 
   return (
     <div className="captain-search">
@@ -97,7 +119,7 @@ const CaptainSearch = () => {
         ) : captain ? (
           <div className="captain-info">
             <div className="captain-header">
-              <img src="/captain-avatar.png" alt="Captain" className="captain-avatar" />
+              <img src='/captain.svg' alt="captain-img" className="captain-avatar" />
               <div>
                 <h2>{captain.name}</h2>
                 <div className="rating">
@@ -108,7 +130,7 @@ const CaptainSearch = () => {
               </div>
             </div>
             <div className="vehicle-info">
-              <span>{captain.vehicleNumber}</span>
+              <span>{captain.vehicleDetails.vehicleNumber}</span>
             </div>
             <div className="ride-details">
               <div className="detail">
@@ -120,9 +142,9 @@ const CaptainSearch = () => {
             </div>
             <button className="contact-captain">
               <Phone className="icon" />
-              Call Captain
+              {captain.phone}
             </button>
-            <p className="eta">Your captain is 3 mins away</p>
+            <p className="eta">Your captain is {Math.floor(Math.random() * 10)} mins away</p>
           </div>
         ) : (
           <div className="no-captain">

@@ -130,7 +130,31 @@ const updateCaptainProfile = asyncHandler(async (req, res) => {
     }
 });
 
+// Find captains by vehicle type
+const findCaptainByVehicleType = asyncHandler(async (req, res) => {
+    const { vehicleType } = req.query;
+
+    if (!vehicleType || !['auto', 'bike'].includes(vehicleType.toLowerCase())) {
+        return res.json({ message: 'Invalid or missing vehicle type. Use "auto" or "bike".' });
+    }
+
+    const captains = await Captain.find({ 'vehicleDetails.type': vehicleType.toLowerCase() });
+
+    if (captains.length === 0) {
+        return res.json({ message: `No captains found for vehicle type "${vehicleType}".` });
+    }
+
+    res.status(200).json({
+        result: "Success",
+        count: captains.length,
+        message: `Captains with vehicle type "${vehicleType}" retrieved successfully.`,
+        data: captains,
+    });
+});
+
+
 module.exports = {
+    findCaptainByVehicleType,
     registerCaptain,
     loginCaptain,
     getCaptainProfile,
