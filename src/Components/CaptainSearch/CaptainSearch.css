@@ -1,12 +1,12 @@
 .captain-search {
   height: 100vh;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
 }
 
 .map-container {
   flex: 1;
-  position: relative;
+  /* position: relative; */
 }
 
 .map-container .leaflet-container {
@@ -15,6 +15,7 @@
 }
 
 .search-panel {
+  width: 35%;
   background-color: white;
   padding: 1rem;
   border-top-left-radius: 20px;

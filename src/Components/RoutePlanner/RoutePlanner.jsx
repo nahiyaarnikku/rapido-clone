@@ -1,22 +1,20 @@
-import React, { useRef, useState } from 'react';
 import {
   Box,
   Button,
   ButtonGroup,
   Flex,
   HStack,
-  IconButton,
   Input,
-  Text,
+  Text
 } from '@chakra-ui/react';
-import { FaLocationArrow, FaTimes } from 'react-icons/fa';
 import {
-  useJsApiLoader,
-  GoogleMap,
-  Marker,
   Autocomplete,
   DirectionsRenderer,
+  GoogleMap,
+  Marker,
+  useJsApiLoader,
 } from '@react-google-maps/api';
+import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { calculateFare } from '../../Utils/helper.js';
 
@@ -34,6 +32,8 @@ function RoutePlanner() {
   const [bikefare, setBikefare] = useState('');
   const [autofare, setAutofare] = useState('');
   const [selectedVehicle, setSelectedVehicle] = useState('bike'); // Default to bike
+  const [pickup, setPickup] = useState({});
+  const [dropoff, setDropoff] = useState({});
 
   const originRef = useRef();
   const destiantionRef = useRef();
@@ -57,6 +57,10 @@ function RoutePlanner() {
 
     const route = results.routes[0].legs[0];
     setDirectionsResponse(results);
+    let startLocation = JSON.stringify(route.start_location);
+    let endLocation = JSON.stringify(route.end_location);
+    setPickup(startLocation);
+    setDropoff(endLocation);
 
     const distanceValue = parseFloat(route.distance.text.replace(' km', ''));
     const durationValue = parseFloat(route.duration.text.replace(' mins', ''));
@@ -77,8 +81,10 @@ function RoutePlanner() {
   }
 
   const handleBooking = () => {
+    console.log(pickup);
+    console.log(dropoff);
     navigate('/captain-search', {
-      state: { vehicle: selectedVehicle, distance, duration },
+      state: { rideType: selectedVehicle, distance, duration, pickup, dropoff },
     });
   };
 
@@ -137,8 +143,8 @@ function RoutePlanner() {
             </Button>
           </ButtonGroup>
         </HStack>
-          <Text>Distance: {distance}</Text>
-          <Text>Duration: {duration}</Text>
+        <Text>Distance: {distance}</Text>
+        <Text>Duration: {duration}</Text>
         <div style={{ marginTop: '10px' }}>
           <label>
             <input
@@ -169,7 +175,7 @@ function RoutePlanner() {
         <Button
           backgroundColor="#Fbbf24"
           mt={4}
-          onClick={handleBooking}
+          onClick={() => handleBooking()}
         >
           Book {selectedVehicle === 'bike' ? 'Bike' : 'Auto'}
         </Button>
