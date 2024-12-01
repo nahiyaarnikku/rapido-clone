@@ -1,6 +1,72 @@
 const User = require('../models/userModel');
 const Captain = require('../models/captainModel');
 const Ride = require('../models/rideModel');
+const Admin = require('../models/adminModel');
+const asyncHandler = require('express-async-handler');
+const generateToken = require('../utils/generateToken');
+
+// Register Administrator
+const registerAdmin = asyncHandler(async (req, res) => {
+    const { name, email, password } = req.body;
+
+    if (!name || !email || !password) res.json({ result: 'Error', message: 'Provide admin details' });
+
+    // Check if admin already exists
+    const existingAdmin = await Admin.findOne({ email });
+    if (existingAdmin) {
+        res.json({
+            result: "Error",
+            message: "Admin already exists"
+        })
+    }
+
+    // Create new admin
+    const admin = await Admin.create({
+        name,
+        email,
+        password
+    });
+
+    if (admin) {
+        res.status(201).json({
+            result: "Success",
+            message: "Admin registered successfully",
+            _id: admin._id,
+            name: admin.name,
+            email: admin.email,
+            token: generateToken(admin._id),
+        });
+    } else {
+        res.json({
+            result: "Error",
+            message: "Invalid admin data"
+        })
+    }
+});
+
+// login admin
+const loginAdmin = asyncHandler(async (req, res) => {
+    const { email, password } = req.body;
+
+    // Check for admin
+    const admin = await Admin.findOne({ email });
+
+    if (admin && (await admin.matchPassword(password))) {
+        res.json({
+            result: "Success",
+            message: "Admin logged in successfully",
+            _id: admin._id,
+            name: admin.name,
+            email: admin.email,
+            token: generateToken(admin._id),
+        });
+    } else {
+        res.json({
+            result: "Error",
+            message: "Email or Password incorrect"
+        })
+    }
+});
 
 // Get the total number of users and captains
 const getUserAndCaptainCount = async (req, res) => {
@@ -68,6 +134,8 @@ const getHelpRequests = async (req, res) => {
 };
 
 module.exports = {
+    registerAdmin,
+    loginAdmin,
     getUserAndCaptainCount,
     getIncomeDetails,
     getUserDetails,
