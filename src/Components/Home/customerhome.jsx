@@ -35,7 +35,7 @@ export default function CustomerHome() {
       <header className="header">
         <div className="container">
           <Menu className="menu-icon" />
-          <h1 className="logo">Rapido</h1>
+          <h1 className="logo">Rapigo</h1>
           <div className="placeholder"></div>
         </div>
       </header>

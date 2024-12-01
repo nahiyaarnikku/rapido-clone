@@ -83,19 +83,19 @@ const Profile = () => {
         </div>
 
         {/* Account Options */}
-        <div className="account-options">
+        {/* <div className="account-options">
           <a href="#" className="account-option-link">
             <i className="fas fa-cogs account-option-icon"></i> Settings
           </a>
           <a href="#" className="account-option-link">
             <i className="fas fa-wallet account-option-icon"></i> Payments
-          </a>
+          </a> */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
             <div onClick={() => handleLogOut()} style={{ display: 'flex', flexDirection: 'column', width: '100%', color: '#fbbf24', textDecoration: 'none', cursor: 'pointer' }}>
               <span style={{ fontSize: '24px', fontWeight: '600', marginLeft: 'auto' }}>Log Out</span>
             </div>
           </div>
-        </div>
+        {/* </div> */}
       </section>
 
       {/* Footer */}
