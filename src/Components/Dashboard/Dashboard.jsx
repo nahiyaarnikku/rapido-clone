@@ -1,78 +1,84 @@
-'use client'
-
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import { Line, Bar } from 'react-chartjs-2';
+import { format, subDays, addHours } from 'date-fns';
 import { 
-  Chart as ChartJS, 
-  CategoryScale, 
-  LinearScale, 
-  PointElement, 
-  LineElement, 
-  BarElement,
-  Title, 
-  Tooltip, 
-  Legend,
-  ArcElement
-} from 'chart.js'
-import { Line, Bar, Doughnut } from 'react-chartjs-2'
-import { CalendarIcon, CreditCard, Users, TrendingUp, List, ChevronDown } from 'lucide-react'
-import { format, subDays } from 'date-fns'
-
-ChartJS.register(
-  CategoryScale, 
-  LinearScale, 
-  PointElement, 
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
   LineElement,
   BarElement,
-  ArcElement,
-  Title, 
-  Tooltip, 
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Title,
+  Tooltip,
   Legend
-)
+);
 
-// Simulated API call
+// Simulated API calls
 const fetchData = async (period) => {
-  // In a real app, this would be an API call
-  await new Promise(resolve => setTimeout(resolve, 500)) // Simulate network delay
-
-  const endDate = new Date()
-  const startDate = subDays(endDate, period === 'week' ? 7 : period === 'month' ? 30 : 365)
-
+  await new Promise(resolve => setTimeout(resolve, 500));
+  const endDate = new Date();
+  const startDate = subDays(endDate, period === 'week' ? 7 : period === 'month' ? 30 : 365);
   const generateData = (start, end, dataPoints) => {
-    const data = []
-    const step = (end - start) / (dataPoints - 1)
+    const data = [];
+    const step = (end - start) / (dataPoints - 1);
     for (let i = 0; i < dataPoints; i++) {
-      const date = new Date(start.getTime() + step * i)
+      const date = new Date(start.getTime() + step * i);
       data.push({
         date: format(date, 'MMM dd'),
         revenue: Math.floor(Math.random() * 5000) + 1000,
         rides: Math.floor(Math.random() * 50) + 10
-      })
+      });
     }
-    return data
-  }
+    return data;
+  };
+  return generateData(startDate, endDate, period === 'week' ? 7 : period === 'month' ? 30 : 12);
+};
 
-  return generateData(startDate, endDate, period === 'week' ? 7 : period === 'month' ? 30 : 12)
-}
+const fetchUpcomingRides = async () => {
+  await new Promise(resolve => setTimeout(resolve, 300));
+  const now = new Date();
+  return [
+    { id: 1, pickup: "Central Park", dropoff: "Times Square", time: addHours(now, 1) },
+    { id: 2, pickup: "Brooklyn Bridge", dropoff: "Statue of Liberty", time: addHours(now, 2) },
+    { id: 3, pickup: "Grand Central Station", dropoff: "Empire State Building", time: addHours(now, 3) },
+  ];
+};
 
-export default function CaptainDashboard() {
-  const [period, setPeriod] = useState('week')
-  const [data, setData] = useState([])
-  const [loading, setLoading] = useState(true)
+const CaptainDashboard = () => {
+  const [period, setPeriod] = useState('week');
+  const [data, setData] = useState([]);
+  const [upcomingRides, setUpcomingRides] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
-      setLoading(true)
-      const newData = await fetchData(period)
-      setData(newData)
-      setLoading(false)
-    }
-    loadData()
-  }, [period])
+      setLoading(true);
+      const [newData, newUpcomingRides] = await Promise.all([
+        fetchData(period),
+        fetchUpcomingRides()
+      ]);
+      setData(newData);
+      setUpcomingRides(newUpcomingRides);
+      setLoading(false);
+    };
+    loadData();
+  }, [period]);
 
-  const totalRevenue = data.reduce((sum, day) => sum + day.revenue, 0)
-  const totalRides = data.reduce((sum, day) => sum + day.rides, 0)
-  const averageFare = totalRides > 0 ? totalRevenue / totalRides : 0
-  const completionRate = 95 // Assuming a fixed completion rate for this example
+  const totalRevenue = data.reduce((sum, day) => sum + day.revenue, 0);
+  const totalRides = data.reduce((sum, day) => sum + day.rides, 0);
+  const averageFare = totalRides > 0 ? totalRevenue / totalRides : 0;
+  const completionRate = 95;
 
   const revenueData = {
     labels: data.map(day => day.date),
@@ -84,7 +90,7 @@ export default function CaptainDashboard() {
         backgroundColor: 'rgba(234, 179, 8, 0.5)',
       }
     ]
-  }
+  };
 
   const ridesData = {
     labels: data.map(day => day.date),
@@ -96,88 +102,67 @@ export default function CaptainDashboard() {
         backgroundColor: 'rgba(59, 130, 246, 0.5)',
       }
     ]
-  }
-
-  const performanceData = {
-    labels: ['Completed', 'Cancelled'],
-    datasets: [
-      {
-        data: [completionRate, 100 - completionRate],
-        backgroundColor: ['rgba(234, 179, 8, 0.8)', 'rgba(239, 68, 68, 0.8)'],
-        hoverBackgroundColor: ['rgba(234, 179, 8, 1)', 'rgba(239, 68, 68, 1)'],
-      }
-    ]
-  }
+  };
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <header className="bg-yellow-400 text-black p-4">
-        <h1 className="text-2xl font-bold">Captain Dashboard</h1>
+    <div style={styles.container}>
+      <header style={styles.header}>
+        <h1 style={styles.headerTitle}>Captain Dashboard</h1>
       </header>
-      <main className="p-4">
-        <div className="mb-6 flex justify-between items-center">
-          <h2 className="text-xl font-semibold">Overview</h2>
-          <div className="relative">
-            <select 
-              value={period}
-              onChange={(e) => setPeriod(e.target.value)}
-              className="appearance-none bg-white border border-gray-300 rounded-md py-2 pl-3 pr-10 text-sm leading-5 focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500"
-            >
-              <option value="week">This Week</option>
-              <option value="month">This Month</option>
-              <option value="year">This Year</option>
-            </select>
-            <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+      <main style={styles.main}>
+        <section>
+          <h2 style={styles.sectionTitle}>Upcoming Rides</h2>
+          <div style={styles.upcomingRidesGrid}>
+            {upcomingRides.map((ride) => (
+              <div key={ride.id} style={styles.upcomingRideCard}>
+                <div style={styles.upcomingRideTime}>{format(ride.time, 'h:mm a')}</div>
+                <div>Pickup: {ride.pickup}</div>
+                <div>Dropoff: {ride.dropoff}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section style={styles.overviewSection}>
+          <h2 style={styles.sectionTitle}>Overview</h2>
+          <select 
+            value={period} 
+            onChange={(e) => setPeriod(e.target.value)}
+            style={styles.periodSelect}
+          >
+            <option value="week">This Week</option>
+            <option value="month">This Month</option>
+            <option value="year">This Year</option>
+          </select>
+        </section>
+
+        <div style={styles.statsGrid}>
+          <div style={styles.statCard}>
+            <h3>Total Revenue</h3>
+            <p style={styles.statValue}>₹{totalRevenue.toFixed(2)}</p>
+          </div>
+          <div style={styles.statCard}>
+            <h3>Total Rides</h3>
+            <p style={styles.statValue}>{totalRides}</p>
+          </div>
+          <div style={styles.statCard}>
+            <h3>Average Fare</h3>
+            <p style={styles.statValue}>₹{averageFare.toFixed(2)}</p>
+          </div>
+          <div style={styles.statCard}>
+            <h3>Completion Rate</h3>
+            <p style={styles.statValue}>{completionRate}%</p>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <div className="bg-white p-4 rounded-lg shadow">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-500 text-sm">Total Revenue</p>
-                <p className="text-2xl font-semibold">₹{totalRevenue.toFixed(2)}</p>
-              </div>
-              <CreditCard className="h-8 w-8 text-yellow-400" />
-            </div>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-500 text-sm">Total Rides</p>
-                <p className="text-2xl font-semibold">{totalRides}</p>
-              </div>
-              <Users className="h-8 w-8 text-yellow-400" />
-            </div>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-500 text-sm">Average Fare</p>
-                <p className="text-2xl font-semibold">₹{averageFare.toFixed(2)}</p>
-              </div>
-              <TrendingUp className="h-8 w-8 text-yellow-400" />
-            </div>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-500 text-sm">Completion Rate</p>
-                <p className="text-2xl font-semibold">{completionRate}%</p>
-              </div>
-              <List className="h-8 w-8 text-yellow-400" />
-            </div>
-          </div>
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          <div className="bg-white p-4 rounded-lg shadow">
-            <h3 className="text-lg font-semibold mb-4">Revenue Trend</h3>
+
+        <div style={styles.chartsGrid}>
+          <div style={styles.chartCard}>
+            <h3 style={styles.chartTitle}>Revenue Trend</h3>
             {loading ? (
-              <div className="h-64 flex items-center justify-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-400"></div>
-              </div>
+              <div style={styles.loadingSpinner}>Loading...</div>
             ) : (
-              <Bar 
-                data={revenueData} 
+              <Bar
+                data={revenueData}
                 options={{
                   responsive: true,
                   scales: {
@@ -193,14 +178,12 @@ export default function CaptainDashboard() {
               />
             )}
           </div>
-          <div className="bg-white p-4 rounded-lg shadow">
-            <h3 className="text-lg font-semibold mb-4">Rides Trend</h3>
+          <div style={styles.chartCard}>
+            <h3 style={styles.chartTitle}>Rides Trend</h3>
             {loading ? (
-              <div className="h-64 flex items-center justify-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-400"></div>
-              </div>
+              <div style={styles.loadingSpinner}>Loading...</div>
             ) : (
-              <Line 
+              <Line
                 data={ridesData}
                 options={{
                   responsive: true,
@@ -218,49 +201,184 @@ export default function CaptainDashboard() {
             )}
           </div>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          <div className="bg-white p-4 rounded-lg shadow">
-            <h3 className="text-lg font-semibold mb-4">Performance Overview</h3>
-            <div className="h-64">
-              <Doughnut 
-                data={performanceData}
-                options={{
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  plugins: {
-                    legend: {
-                      position: 'bottom',
-                    },
-                  },
-                }}
-              />
+
+        <div style={styles.chartsGrid}>
+          <div style={styles.chartCard}>
+            <h3 style={styles.chartTitle}>Performance Overview</h3>
+            <div style={styles.performanceChart}>
+              <div style={styles.performanceCircle}>
+                <span style={styles.performanceText}>{completionRate}%</span>
+              </div>
+              <p>Completion Rate</p>
             </div>
           </div>
-          <div className="bg-white p-4 rounded-lg shadow">
-            <h3 className="text-lg font-semibold mb-4">Recent Rides</h3>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Revenue</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rides</th>
+          <div style={styles.chartCard}>
+            <h3 style={styles.chartTitle}>Recent Rides</h3>
+            <table style={styles.recentRidesTable}>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Revenue</th>
+                  <th>Rides</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.slice(0, 5).map((day, index) => (
+                  <tr key={index}>
+                    <td>{day.date}</td>
+                    <td>₹{day.revenue.toFixed(2)}</td>
+                    <td>{day.rides}</td>
+                    <td>
+                      <span style={day.rides > 30 ? styles.excellentBadge : styles.goodBadge}>
+                        {day.rides > 30 ? 'Excellent' : 'Good'}
+                      </span>
+                    </td>
                   </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {data.slice(0, 5).map((day, index) => (
-                    <tr key={index}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{day.date}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">₹{day.revenue.toFixed(2)}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{day.rides}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </main>
     </div>
-  )
-}
+  );
+};
+
+const styles = {
+  container: {
+    minHeight: '100vh',
+    backgroundColor: '#f7fafc',
+    fontFamily: 'Arial, sans-serif',
+  },
+  header: {
+    backgroundColor: '#eab308',
+    color: 'black',
+    padding: '1rem',
+  },
+  headerTitle: {
+    fontSize: '1.5rem',
+    fontWeight: 'bold',
+  },
+  main: {
+    padding: '1rem',
+  },
+  sectionTitle: {
+    fontSize: '1.25rem',
+    fontWeight: 'bold',
+    marginBottom: '1rem',
+  },
+  upcomingRidesGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+    gap: '1rem',
+    marginBottom: '2rem',
+  },
+  upcomingRideCard: {
+    backgroundColor: 'white',
+    padding: '1rem',
+    borderRadius: '0.5rem',
+    boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
+    transition: 'transform 0.3s ease-in-out',
+    ':hover': {
+      transform: 'translateY(-5px)',
+    },
+  },
+  upcomingRideTime: {
+    fontWeight: 'bold',
+    marginBottom: '0.5rem',
+  },
+  overviewSection: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '1rem',
+  },
+  periodSelect: {
+    padding: '0.5rem',
+    borderRadius: '0.25rem',
+    border: '1px solid #e2e8f0',
+  },
+  statsGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+    gap: '1rem',
+    marginBottom: '2rem',
+  },
+  statCard: {
+    backgroundColor: 'white',
+    padding: '1rem',
+    borderRadius: '0.5rem',
+    boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
+    textAlign: 'center',
+  },
+  statValue: {
+    fontSize: '1.5rem',
+    fontWeight: 'bold',
+    color: '#2d3748',
+  },
+  chartsGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+    gap: '1rem',
+    marginBottom: '2rem',
+  },
+  chartCard: {
+    backgroundColor: 'white',
+    padding: '1rem',
+    borderRadius: '0.5rem',
+    boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
+  },
+  chartTitle: {
+    fontSize: '1rem',
+    fontWeight: 'bold',
+    marginBottom: '1rem',
+  },
+  loadingSpinner: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '300px',
+  },
+  performanceChart: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '300px',
+  },
+  performanceCircle: {
+    width: '150px',
+    height: '150px',
+    borderRadius: '50%',
+    border: '10px solid #48bb78',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: '1rem',
+  },
+  performanceText: {
+    fontSize: '2rem',
+    fontWeight: 'bold',
+  },
+  recentRidesTable: {
+    width: '100%',
+    borderCollapse: 'collapse',
+  },
+  excellentBadge: {
+    backgroundColor: '#48bb78',
+    color: 'white',
+    padding: '0.25rem 0.5rem',
+    borderRadius: '9999px',
+    fontSize: '0.75rem',
+  },
+  goodBadge: {
+    backgroundColor: '#ecc94b',
+    color: 'white',
+    padding: '0.25rem 0.5rem',
+    borderRadius: '9999px',
+    fontSize: '0.75rem',
+  },
+};
+
+export default CaptainDashboard;

@@ -14,8 +14,8 @@ const initialMessage = {
 };
 
 const responses = {
-  "What is Rapido clone?": {
-    text: "Rapido clone is a bike taxi service app similar to the original Rapido. It allows users to book motorcycle rides for quick and affordable transportation in urban areas.",
+  "What is Rapigo?": {
+    text: "Rapigo is a bike taxi service app similar to the original Rapido. It allows users to book motorcycle rides for quick and affordable transportation in urban areas.",
     isUser: false,
     options: ["How does it work?", "Is it safe?", "How much does it cost?"]
   },
@@ -32,12 +32,12 @@ const responses = {
   "How much does it cost?": {
     text: "The cost varies depending on the distance and location, but it's generally more affordable than traditional taxis. The app provides a fare estimate before booking, and users can pay through the app or in cash.",
     isUser: false,
-    options: ["What is Rapido clone?", "How does it work?", "Where is it available?"]
+    options: ["What is Rapigo?", "How does it work?", "Where is it available?"]
   },
   "Where is it available?": {
     text: "The availability depends on the specific Rapido clone implementation, but typically these services are available in major cities and urban areas where there's a demand for quick, affordable transportation.",
     isUser: false,
-    options: ["What is Rapido clone?", "How does it work?", "Is it safe?"]
+    options: ["What is Rapigo?", "How does it work?", "Is it safe?"]
   }
 };
 
