@@ -141,7 +141,7 @@ const CaptainDashboard = () => {
 
   function handleRide(id){
     console.log(id);
-    navigate('/captain-ride-start', {
+    navigate('/captain-ride-request', {
       state: {id}
     })    
   }

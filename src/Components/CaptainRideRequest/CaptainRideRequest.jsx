@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { MapPin, Clock, CreditCard, User, Check, X } from 'react-feather';
 import './CaptainRideRequest.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { BaseUrl } from '../../App';
 import axios from 'axios';
 
@@ -22,6 +22,7 @@ const CaptainRideRequest = () => {
   const [rideRequested, setRideRequested] = useState({})
   // const { customerName, pickup, dropoff, distance, estimatedFare } = rideRequest2;
   const center = { lat: 12.9716, lng: 77.5946 }; // Bangalore center
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (timeLeft > 0) {
@@ -56,7 +57,35 @@ const CaptainRideRequest = () => {
     }
   }, [state])
 
-  const updateRideStatus = (status) => {}
+  const updateRideStatus = (status) => {
+    if (status === 'declined') {
+      navigate('/captaindashboard');
+      return;
+    }
+    let data = JSON.stringify({
+      "status": status,
+    });
+
+    let config = {
+      method: 'put',
+      maxBodyLength: Infinity,
+      url: BaseUrl + '/api/rides/update/' + state.id,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: data
+    };
+
+    axios.request(config)
+      .then((response) => {
+        navigate('/captain-ride-start', {
+          state: { id: response.data._id }
+        })
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   return (
     <div className="captain-ride-request">
@@ -115,11 +144,11 @@ const CaptainRideRequest = () => {
         </div>
 
         <div className="action-buttons">
-          <button className="approve-button" onClick={updateRideStatus}>
+          <button className="approve-button" onClick={() => updateRideStatus('approve')}>
             <Check className="icon" />
             Approve
           </button>
-          <button className="decline-button" onClick={updateRideStatus}>
+          <button className="decline-button" onClick={() => updateRideStatus('declined')}>
             <X className="icon" />
             Decline
           </button>
