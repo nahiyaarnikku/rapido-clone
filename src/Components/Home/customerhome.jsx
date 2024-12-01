@@ -109,14 +109,14 @@ export default function HomePage() {
               onMouseOver={handleMouseOver}
               onMouseOut={handleMouseOut}
             >
-              <Clock style={{ height: '24px', width: '24px', marginBottom: '8px', color: '#fbbf24' }} />
+              {/* <Clock style={{ height: '24px', width: '24px', marginBottom: '8px', color: '#fbbf24' }} />
               <span>Ride Later</span>
             </button>
             <button
               style={buttonStyle}
               onMouseOver={handleMouseOver}
-              onMouseOut={handleMouseOut}
-            >
+              onMouseOut={handleMouseOut} >*/}
+      
               <MapPin style={{ height: '24px', width: '24px', marginBottom: '8px', color: '#fbbf24' }} />
               <span>My Places</span>
             </button>

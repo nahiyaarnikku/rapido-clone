@@ -91,8 +91,8 @@ function CustomLogin() {
                                 <div className="d-flex align-items-center">
                                     <input onChange={(e) => setShowPassword(e.target.checked)} id="passwordToggle" type="checkbox" className="form-check-input me-2" style={{ cursor: 'pointer' }} />
                                     <label htmlFor="passwordToggle" className="form-check-label text-dark" style={{ cursor: 'pointer' }}>Show Password</label>
-                                </div>
-                                <a href="#" className="text-decoration-none text-primary">Forgot password?</a>
+                            </div>
+                                {/* <a href="#" className="text-decoration-none text-primary">Forgot password?</a> */}
                             </div>
                             <button onClick={(e) => handleSubmit(e)} type="submit" className="btn btn-primary w-100 mt-3">Sign in</button>
                             {error.apiResponse && <p className="text-danger">{error.apiResponse}</p>}

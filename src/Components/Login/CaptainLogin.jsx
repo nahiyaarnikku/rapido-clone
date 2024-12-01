@@ -11,6 +11,7 @@ const CaptainLogin = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(''); // Clear previous errors
@@ -106,11 +107,11 @@ const CaptainLogin = () => {
         {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
 
         {/* Forgot Password Link */}
-        <div className="mt-4 text-center">
+        {/* <div className="mt-4 text-center">
           <a href="/forgot-password" className="text-sm text-yellow-600 hover:text-yellow-700">
             Forgot your password?
           </a>
-        </div>
+        </div> */}
 
         {/* Sign Up Section */}
         <div className="mt-8 text-center">

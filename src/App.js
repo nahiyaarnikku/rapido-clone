@@ -10,6 +10,8 @@ import CaptainRideRequest from './Components/CaptainRideRequest/CaptainRideReque
 import RouteAndPricingIndia from './Components/RouteAndPricingIndia/RouteAndPricingIndia';
 import CaptainRideStart from './Components/CaptainRideStart/CaptainRideStart';
 import CaptainSearch from './Components/CaptainSearch/CaptainSearch';
+// import AdminDashboard from './Components/Admin/admin-dashboard';
+// import AdminLogin from './Components/Admin/admin-login';
 
 export const BaseUrl = 'http://localhost:5000';
 
@@ -131,6 +133,10 @@ function App() {
               color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <RouteAndPricingIndia /></Suspense>} />
             <Route path='/captain-search' element={<Suspense fallback={<div className='suspense'> <ClipLoader
               color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <CaptainSearch /></Suspense>} />
+            {/* <Route path='/admin-dashboard' element={<Suspense fallback={<div className='suspense'> <ClipLoader
+            color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <AdminDashboard /></Suspense>} />
+            <Route path='/admin-login' element={<Suspense fallback={<div className='suspense'> <ClipLoader
+            color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <AdminLogin /></Suspense>} /> */}
           </Routes>
         </div>
       </DataProvider>
