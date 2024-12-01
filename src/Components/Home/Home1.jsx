@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React,{ useContext }from "react";
 import "./home.css";
 import bike from "../../Assets/home_img_new.webp";
 import safetyOverviewImage from "../../Assets/safety-overview-header.png";
@@ -13,17 +13,17 @@ import business2 from "../../Assets/Rapido4business2.png"
 import Toggle from "../Toggle/Toggle";
 import DataContext from '../../Context/Context'
 import Desc from "../Toggle/Desc";
-import { customerDesc, captainDesc, homeFeedback, feedCaptains } from "../../Assets/Data";
+import { customerDesc , captainDesc ,homeFeedback , feedCaptains} from "../../Assets/Data";
 import Temp1 from "./Temp1";
 import Slider1 from "../Slider/Slider";
 import Footer from "../Footer/Footer";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { Chatbot } from "../Chatbot/Chatbot";
+
 
 const Home = () => {
-  const { toggleActive, setToggleActive } = useContext(DataContext)
-  const { toggleActive1, setToggleActive1 } = useContext(DataContext)
+  const {toggleActive,setToggleActive} = useContext(DataContext)
+  const {toggleActive1,setToggleActive1} = useContext(DataContext)
   const navigate = useNavigate();
 
   return (
@@ -31,9 +31,9 @@ const Home = () => {
       <div className="row home-row" >
         <div className="col-lg-5 home-left text-center text-lg-start" >
           <div className="px-4">
-            <h1>India's largest bike taxi service</h1>
+            <h1>India’s largest bike taxi service</h1>
             <p>
-              Rapido is India's first and fastest-growing Bike taxi app with a
+              Rapido is India’s first and fastest-growing Bike taxi app with a
               whopping 25 Million+ app downloads. We are now running operations
               in more than 100 cities.
             </p>
@@ -44,12 +44,13 @@ const Home = () => {
           </div>
         </div>
         <div  className="col-lg-7 home-right d-none d-lg-block"  >
-        <div className="background_image ">
-                <div className="page_one_image">
+        <div class="background_image ">
+                <div class="page_one_image">
                     <img src={bike} alt="bike-img" loading="lazy" />
                 </div>
             </div>
         </div>
+   
       </div>
       <div className="safety-img-container">
         <img src={safetyOverviewImage} alt="safety-img" className="img-fluid" loading="lazy" />
@@ -137,11 +138,12 @@ const Home = () => {
           </div>
           <Toggle toggleActive={toggleActive1} setToggleActive={setToggleActive1}/>
            <Slider1
-            feedback={(toggleActive1 === "Customers") ? homeFeedback : feedCaptains}
+feedback={(toggleActive1 === "Customers") ? homeFeedback : feedCaptains}
             />
         </div>
       </div>
       <div className="row know-us-container">
+    
         <div className="col-lg-6 text-center  py-3 py-lg-0 " >
           <div 
           className="d-inline-flex flex-column align-items-center align-items-lg-start"
@@ -152,16 +154,15 @@ const Home = () => {
           <p className="know-us-text mx-auto text-center text-lg-start ps-2">
           Get onboard with Rapido B2B services to earn more while you deliver. With highly reliable deliveries and a strong customer base, we are one of the fastest growing networks in the country. Sign up as a Rapido Partner for on-time services.
           </p>
+  
         </div>
         <div className="col-lg-6 ">
           <Temp1 img1={business1} img2={business2}/>
         </div>
       </div>
       <Footer />
-      <Chatbot />
     </div>
   );
 };
 
 export default Home;
-
