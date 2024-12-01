@@ -13,7 +13,7 @@ const RouteAndPricingIndia = ({ pickup, dropoff }) => {
   const [selectedRide, setSelectedRide] = useState(null);
 
   const center = { lat: 12.9716, lng: 77.5946 }; // Bangalore center
-  const GOOGLE_MAPS_API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY'; // Replace with your actual API key
+  const GOOGLE_MAPS_API_KEY = 'REACT_APP_GOOGLE_MAPS_API_KEY'; // Replace with your actual API key
 
   useEffect(() => {
     // Simulating fetching nearby vehicles
@@ -49,10 +49,10 @@ const RouteAndPricingIndia = ({ pickup, dropoff }) => {
       
       // Calculate dynamic pricing
       const distanceInKm = response.routes[0].legs[0].distance.value / 1000;
-      const baseBikePrice = 15; // in INR
-      const baseAutoPrice = 25; // in INR
-      const bikePerKmRate = 4;
-      const autoPerKmRate = 7;
+      const baseBikePrice = 0.5; // in INR
+      const baseAutoPrice = 0.5; // in INR
+      const bikePerKmRate = 10;
+      const autoPerKmRate = 20;
       
       const calculatedBikePrice = Math.round(baseBikePrice + (distanceInKm * bikePerKmRate));
       const calculatedAutoPrice = Math.round(baseAutoPrice + (distanceInKm * autoPerKmRate));

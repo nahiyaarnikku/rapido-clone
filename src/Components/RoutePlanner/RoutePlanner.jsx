@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import {
   Box,
   Button,
@@ -7,7 +7,6 @@ import {
   HStack,
   IconButton,
   Input,
-  SkeletonText,
   Text,
 } from '@chakra-ui/react';
 import { FaLocationArrow, FaTimes } from 'react-icons/fa';
@@ -18,7 +17,7 @@ import {
   Autocomplete,
   DirectionsRenderer,
 } from '@react-google-maps/api';
-import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { calculateFare } from '../../Utils/helper.js';
 
 const center = { lat: 28.7041, lng: 77.1025 };
@@ -29,9 +28,6 @@ function RoutePlanner() {
     libraries: ['places'],
   });
 
-  console.log("API KEY", process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
-
-  const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const [distance, setDistance] = useState('');
   const [duration, setDuration] = useState('');
@@ -39,13 +35,12 @@ function RoutePlanner() {
   const [autofare, setAutofare] = useState('');
   const [selectedVehicle, setSelectedVehicle] = useState('bike'); // Default to bike
 
-  /** @type React.MutableRefObject<HTMLInputElement> */
   const originRef = useRef();
-  /** @type React.MutableRefObject<HTMLInputElement> */
   const destiantionRef = useRef();
+  const navigate = useNavigate();
 
   if (!isLoaded) {
-    return <SkeletonText />;
+    return <Text>Loading...</Text>;
   }
 
   async function calculateRoute() {
@@ -53,26 +48,22 @@ function RoutePlanner() {
       return;
     }
 
-    // eslint-disable-next-line no-undef
-    const directionsService = new google.maps.DirectionsService();
+    const directionsService = new window.google.maps.DirectionsService();
     const results = await directionsService.route({
       origin: originRef.current.value,
       destination: destiantionRef.current.value,
-      // eslint-disable-next-line no-undef
-      travelMode: google.maps.TravelMode.DRIVING,
+      travelMode: window.google.maps.TravelMode.DRIVING,
     });
 
     const route = results.routes[0].legs[0];
     setDirectionsResponse(results);
 
-    // Extract numeric values from distance and duration strings
     const distanceValue = parseFloat(route.distance.text.replace(' km', ''));
     const durationValue = parseFloat(route.duration.text.replace(' mins', ''));
 
-    setDistance(route.distance.text); // Keep original string for display
-    setDuration(route.duration.text); // Keep original string for display
+    setDistance(route.distance.text);
+    setDuration(route.duration.text);
 
-    // Calculate fares
     setBikefare(calculateFare(distanceValue, 'bike', durationValue));
     setAutofare(calculateFare(distanceValue, 'auto', durationValue));
   }
@@ -84,6 +75,12 @@ function RoutePlanner() {
     originRef.current.value = '';
     destiantionRef.current.value = '';
   }
+
+  const handleBooking = () => {
+    navigate('/captain-search', {
+      state: { vehicle: selectedVehicle, distance, duration },
+    });
+  };
 
   return (
     <Flex
@@ -104,7 +101,6 @@ function RoutePlanner() {
             mapTypeControl: false,
             fullscreenControl: false,
           }}
-          onLoad={(map) => setMap(map)}
         >
           <Marker position={center} />
           {directionsResponse && (
@@ -132,71 +128,51 @@ function RoutePlanner() {
               <Input type="text" placeholder="Destination" ref={destiantionRef} />
             </Autocomplete>
           </Box>
-
           <ButtonGroup>
             <Button
-              colorScheme="#9ca3af"
-              backgroundColor={'#Fbbf24'}
-              type="submit"
+              backgroundColor="#Fbbf24"
               onClick={calculateRoute}
             >
               Calculate Route
             </Button>
-            <IconButton
-              aria-label="center back"
-              icon={<FaTimes />}
-              onClick={clearRoute}
-            />
           </ButtonGroup>
         </HStack>
-        <HStack spacing={4} mt={4} justifyContent="space-between">
-          <Text>Distance: {distance} </Text>
-          <Text>Duration: {duration} </Text>
-          <IconButton
-            aria-label="center back"
-            icon={<FaLocationArrow />}
-            isRound
-            onClick={() => {
-              map.panTo(center);
-              map.setZoom(15);
-            }}
-          />
-        </HStack>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-start',
-          }}
-        >
-          <div style={{ marginBottom: '10px' }}>
-            <label>
-              <input
-                type="radio"
-                name="vehicle"
-                value="bike"
-                checked={selectedVehicle === 'bike'}
-                onChange={() => setSelectedVehicle('bike')}
-              />
-              Bike
-            </label>
-            <label style={{ marginLeft: '20px' }}>
-              <input
-                type="radio"
-                name="vehicle"
-                value="auto"
-                checked={selectedVehicle === 'auto'}
-                onChange={() => setSelectedVehicle('auto')}
-              />
-              Auto
-            </label>
-          </div>
-
-          {selectedVehicle === 'bike' && (
-            <Text style={{ width: '50%' }}>Bike: ₹{bikefare}</Text>
-          )}
-          {selectedVehicle === 'auto' && <Text>Auto: ₹{autofare}</Text>}
+          <Text>Distance: {distance}</Text>
+          <Text>Duration: {duration}</Text>
+        <div style={{ marginTop: '10px' }}>
+          <label>
+            <input
+              type="radio"
+              name="vehicle"
+              value="bike"
+              checked={selectedVehicle === 'bike'}
+              onChange={() => setSelectedVehicle('bike')}
+            />
+            Bike
+          </label>
+          <label style={{ marginLeft: '20px' }}>
+            <input
+              type="radio"
+              name="vehicle"
+              value="auto"
+              checked={selectedVehicle === 'auto'}
+              onChange={() => setSelectedVehicle('auto')}
+            />
+            Auto
+          </label>
         </div>
+        <Text mt={2}>
+          {selectedVehicle === 'bike'
+            ? `Bike Fare: ₹${bikefare}`
+            : `Auto Fare: ₹${autofare}`}
+        </Text>
+        <Button
+          backgroundColor="#Fbbf24"
+          mt={4}
+          onClick={handleBooking}
+        >
+          Book {selectedVehicle === 'bike' ? 'Bike' : 'Auto'}
+        </Button>
       </Box>
     </Flex>
   );

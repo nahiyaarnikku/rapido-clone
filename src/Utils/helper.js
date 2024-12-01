@@ -1,14 +1,14 @@
 export function calculateFare(distance, vehicleType, timeInMinutes = 0) {
     const fareRates = {
       bike: {
-        baseFare: 15, // Base fare for bike rides
+        baseFare: 10, // Base fare for bike rides
         perKmRate: 5, // Rate per kilometer
-        perMinuteRate: 1, // Optional: Per minute charge
+        perMinuteRate: 0.5, // Optional: Per minute charge
       },
       auto: {
         baseFare: 20, // Base fare for auto rides
         perKmRate: 10, // Rate per kilometer
-        perMinuteRate: 2, // Optional: Per minute charge
+        perMinuteRate: 0.5, // Optional: Per minute charge
       },
     };
   
