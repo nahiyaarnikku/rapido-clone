@@ -144,7 +144,7 @@ const CaptainRideRequest = () => {
         </div>
 
         <div className="action-buttons">
-          <button className="approve-button" onClick={() => updateRideStatus('approve')}>
+          <button className="approve-button" onClick={() => updateRideStatus('approved')}>
             <Check className="icon" />
             Approve
           </button>

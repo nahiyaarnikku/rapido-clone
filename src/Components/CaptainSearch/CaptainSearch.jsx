@@ -53,8 +53,9 @@ const CaptainSearch = () => {
 
     axios.request(config)
       .then((response) => {
-        console.log(JSON.stringify(response.data));
         localStorage.setItem('bookedRide', JSON.stringify(response.data));
+        // check if ride approved from captain
+        checkRideStatus(response.data._id);
       })
       .catch((error) => {
         console.log(error);
@@ -93,13 +94,35 @@ const CaptainSearch = () => {
           console.log(randomCaptain);
           bookRide(randomCaptain._id);
         }
-        setIsSearching(false);
+        // setIsSearching(false);
       })
       .catch((error) => {
         console.log(error);
-        setIsSearching(false);
+        // setIsSearching(false);
       });
   }, [rideType])
+
+  const checkRideStatus = (id) => {
+    setInterval(() => {
+      let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: BaseUrl + '/api/rides/' + id,
+        headers: {}
+      };
+
+      axios.request(config)
+        .then((response) => {
+          if(response.data.status === 'approved'){
+            setIsSearching(false);
+            console.log(JSON.stringify(response.data));
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }, 30000)
+  }
 
   return (
     <div className="captain-search">
