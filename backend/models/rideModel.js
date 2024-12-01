@@ -6,8 +6,9 @@ const rideSchema = mongoose.Schema({
     status: { type: String, default: 'pending' },
     startLocation: { type: String, required: true },
     endLocation: { type: String, required: true },
+    distance: { type: String, required: true },
     price: { type: Number, required: true },
-    paymentMethod: { type: String, required: true }, // cash, card, or QR
+    paymentMethod: { type: String, default: 'pending' }, // cash, card, or QR
 }, { timestamps: true });
 
 module.exports = mongoose.model('Ride', rideSchema);
