@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { Truck, Star, Phone } from 'react-feather';
 import './CaptainSearch.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { BaseUrl } from '../../App';
 import axios from 'axios';
 
@@ -25,6 +25,7 @@ const CaptainSearch = () => {
   const [pickup, setPickup] = useState({});
   const [dropoff, setDropoff] = useState({});
   const [rideType, setRideType] = useState('');
+  const navigate = useNavigate();
 
   const center = { lat: 28.679079, lng: 77.069710 }; // delhi center
 
@@ -55,7 +56,8 @@ const CaptainSearch = () => {
       .then((response) => {
         localStorage.setItem('bookedRide', JSON.stringify(response.data));
         // check if ride approved from captain
-        checkRideStatus(response.data._id);
+        // console.log(captain);
+        checkRideStatus(response.data._id, captain);
       })
       .catch((error) => {
         console.log(error);
@@ -102,7 +104,22 @@ const CaptainSearch = () => {
       });
   }, [rideType])
 
-  const checkRideStatus = (id) => {
+  const checkRideStatus = (id, captainData) => {
+    console.log(captainData)
+    const bookedRideDetails = {
+      captainName: captainData.name,
+      captainRating: captainData.rating,
+      captainRides: captainData.totalRides,
+      captainVehicleNumber: captainData.vehicleDetails.vehicleNumber,
+      captainPhone: captainData.phone,
+      origin: state.origin,
+      destination: state.destination,
+      center,
+      pickup,
+      dropoff
+    }
+    localStorage.setItem('bookedRideDetails', JSON.stringify(bookedRideDetails));
+
     setInterval(() => {
       let config = {
         method: 'get',
@@ -113,15 +130,21 @@ const CaptainSearch = () => {
 
       axios.request(config)
         .then((response) => {
-          if(response.data.status === 'approved'){
+          if (response.data.status === 'approved') {
             setIsSearching(false);
-            console.log(JSON.stringify(response.data));
+          }
+          if (response.data.status === 'started') {
+            navigate('/ride-started');
           }
         })
         .catch((error) => {
           console.log(error);
         });
-    }, 30000)
+    }, 10000)
+  }
+
+  const saveRideDetails = () => {
+    console.log(captain)
   }
 
   return (

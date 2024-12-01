@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { MapPin, Phone, MessageCircle, User, Clock, CreditCard, Check } from 'react-feather';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { BaseUrl } from '../../App';
 
@@ -21,6 +21,7 @@ const CaptainRideStart = () => {
   const [otp, setOtp] = useState('');
   const [otpError, setOtpError] = useState('');
   const [rideRequested, setRideRequested] = useState({})
+  const naviagte = useNavigate();
 
   // For demonstration, we'll use fixed coordinates. In a real app, these would be dynamic.
   const pickupLocation = [12.9815, 77.6094];
@@ -51,6 +52,8 @@ const CaptainRideStart = () => {
       .catch((error) => {
         console.log(error);
       });
+
+    naviagte('/ride-started-captain');
   }
 
   const handleOtpSubmit = (e) => {

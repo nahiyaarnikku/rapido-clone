@@ -12,6 +12,7 @@ import CaptainRideStart from './Components/CaptainRideStart/CaptainRideStart';
 import CaptainSearch from './Components/CaptainSearch/CaptainSearch';
 import AdminDashboard from './Components/Admin/admin-dashboard.tsx';
 import AdminLogin from './Components/Admin/admin-login.tsx';
+import RideStarted from './Components/RideStarted/RideStarted.jsx';
 
 export const BaseUrl = 'http://localhost:5000';
 
@@ -35,7 +36,7 @@ const CustomerProfile = React.lazy(() => import('./Components/Profile/customerpr
 function App() {
   const location = useLocation(); // Get the current route
   // Define your multiple conditions
-  const shouldRenderNavbar = location.pathname !== '/route-planner' && location.pathname !== '/customerhome' && location.pathname !== '/customerprofile' && location.pathname !== '/captain-approved-ride' && location.pathname !== '/captain-search' && location.pathname !== '/captaindashboard' && location.pathname !== '/captain-ride-request' ;
+  const shouldRenderNavbar = location.pathname !== '/route-planner' && location.pathname !== '/customerhome' && location.pathname !== '/customerprofile' && location.pathname !== '/captain-approved-ride' && location.pathname !== '/captain-search' && location.pathname !== '/captaindashboard' && location.pathname !== '/captain-ride-request' && location.pathname !== '/ride-started' && location.pathname !== '/ride-started-captain' ;
 
   return (
     <div className='app'>
@@ -137,6 +138,10 @@ function App() {
             color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <AdminDashboard /></Suspense>} />
             <Route path='/admin-login' element={<Suspense fallback={<div className='suspense'> <ClipLoader
             color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <AdminLogin /></Suspense>} />
+            <Route path='/ride-started' element={<Suspense fallback={<div className='suspense'> <ClipLoader
+            color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <RideStarted /></Suspense>} />
+            <Route path='/ride-started-captain' element={<Suspense fallback={<div className='suspense'> <ClipLoader
+            color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <RideStarted /></Suspense>} />
           </Routes>
         </div>
       </DataProvider>

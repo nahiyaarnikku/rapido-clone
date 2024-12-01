@@ -60,8 +60,9 @@ const fetchUpcomingRides = async () => {
 
   let response = await axios.request(config);
   response = response.data;
-  // console.log(response.data);
+  if(!response.data) return;
   const reversedData = [...response.data].reverse()
+  console.log(reversedData);
   return reversedData;
 };
 
@@ -155,7 +156,7 @@ const CaptainDashboard = () => {
         <section>
           <h2 style={styles.sectionTitle}>Upcoming Rides</h2>
           <div style={styles.upcomingRidesGrid}>
-            {upcomingRides.map((ride) => (
+            {upcomingRides && upcomingRides.map((ride) => (
               <div key={ride._id} style={styles.upcomingRideCard} onClick={() => handleRide(ride._id)}>
                 <div style={styles.upcomingRideTime}>{convertToAMPM(ride.createdAt)}</div>
                 <div>Pickup: {ride.startLocation}</div>
