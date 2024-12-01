@@ -24,7 +24,7 @@ const CaptainSearch = () => {
   const [dropoff, setDropoff] = useState({});
   const [rideType, setRideType] = useState('');
 
-  const center = { lat: 28.679079, lng: 77.069710 }; // Bangalore center
+  const center = { lat: 28.679079, lng: 77.069710 }; // delhi center
 
   useEffect(() => {
     // Parse the pickup and dropoff locations from JSON
