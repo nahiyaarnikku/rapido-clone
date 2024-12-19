@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { Loader2, RefreshCw, User, Users, DollarSign, HelpCircle, Truck } from "lucide-react";
@@ -8,15 +8,17 @@ interface User {
   _id: string;
   name: string;
   email: string;
-  phoneNumber: string;
+  phone: string;
 }
 
 interface Captain {
   _id: string;
   name: string;
   email: string;
-  phoneNumber: string;
-  vehicleNumber: string;
+  phone: string;
+  vehicleDetails: {
+    vehicleNumber: string;
+  };
 }
 
 interface HelpRequest {
@@ -42,14 +44,18 @@ export default function AdminDashboard() {
 
   const fetchDashboardData = async () => {
     setLoading(prev => ({ ...prev, overview: true }));
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: 'http://localhost:5000/api/admins/counts',
+      headers: {}
+    };
     try {
-      const [countResponse, incomeResponse] = await Promise.all([
-        axios.get("/api/admin/user-and-captain-count"),
-        axios.get("/api/admin/income-details"),
-      ]);
-      setUserCount(countResponse.data.userCount);
-      setCaptainCount(countResponse.data.captainCount);
-      setTotalIncome(incomeResponse.data.totalIncome);
+      const response = await axios.request(config).then(result => result.data);
+      if (response.result === "SUCCESS") {
+        setUserCount(response.message.totalUsers);
+        setCaptainCount(response.message.totalCaptains);
+      }
     } catch (error) {
       console.error("Error fetching dashboard data:", error);
     } finally {
@@ -59,9 +65,17 @@ export default function AdminDashboard() {
 
   const fetchUserDetails = async (id: string) => {
     setLoading(prev => ({ ...prev, user: true }));
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: 'http://localhost:5000/api/admins/user/' + id,
+      headers: {}
+    };
     try {
-      const response = await axios.get(`/api/admin/user/${id}`);
-      setSelectedUser(response.data);
+      const response = await axios.request(config).then(result => result.data);
+      if (response.result === "SUCCESS") {
+        setSelectedUser(response.message);
+      }
     } catch (error) {
       console.error("Error fetching user details:", error);
       setSelectedUser(null);
@@ -72,9 +86,17 @@ export default function AdminDashboard() {
 
   const fetchCaptainDetails = async (id: string) => {
     setLoading(prev => ({ ...prev, captain: true }));
+    let config = {
+      method: 'get',
+      maxBodyLength: Infinity,
+      url: 'http://localhost:5000/api/admins/captain/' + id,
+      headers: {}
+    };
     try {
-      const response = await axios.get(`/api/admin/captain/${id}`);
-      setSelectedCaptain(response.data);
+      const response = await axios.request(config).then(result => result.data);
+      if (response.result === "SUCCESS") {
+        setSelectedCaptain(response.message);
+      }
     } catch (error) {
       console.error("Error fetching captain details:", error);
       setSelectedCaptain(null);
@@ -95,13 +117,18 @@ export default function AdminDashboard() {
     }
   };
 
+  useEffect(() => {
+    fetchDashboardData();
+  }, [])
+
+
   return (
     <div className="min-h-screen bg-gray-100">
       <header className="bg-yellow-400 text-black p-4 shadow-md">
         <h1 className="text-3xl font-bold">Rapigo Admin Dashboard</h1>
       </header>
       <main className="container mx-auto p-4 space-y-6">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -109,7 +136,7 @@ export default function AdminDashboard() {
         >
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold">Dashboard Overview</h2>
-            <button 
+            <button
               onClick={fetchDashboardData}
               className="bg-yellow-400 text-black px-4 py-2 rounded-md hover:bg-yellow-500 transition-colors flex items-center"
               disabled={loading.overview}
@@ -119,7 +146,7 @@ export default function AdminDashboard() {
             </button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <motion.div 
+            <motion.div
               whileHover={{ scale: 1.05 }}
               className="bg-gray-100 p-4 rounded-lg shadow"
             >
@@ -129,7 +156,7 @@ export default function AdminDashboard() {
               </div>
               <p className="text-2xl font-bold">{userCount !== null ? userCount : '-'}</p>
             </motion.div>
-            <motion.div 
+            <motion.div
               whileHover={{ scale: 1.05 }}
               className="bg-gray-100 p-4 rounded-lg shadow"
             >
@@ -139,7 +166,7 @@ export default function AdminDashboard() {
               </div>
               <p className="text-2xl font-bold">{captainCount !== null ? captainCount : '-'}</p>
             </motion.div>
-            <motion.div 
+            {/* <motion.div
               whileHover={{ scale: 1.05 }}
               className="bg-gray-100 p-4 rounded-lg shadow"
             >
@@ -150,12 +177,12 @@ export default function AdminDashboard() {
               <p className="text-2xl font-bold">
                 {totalIncome !== null ? `₹${totalIncome.toLocaleString()}` : '-'}
               </p>
-            </motion.div>
+            </motion.div> */}
           </div>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -178,7 +205,7 @@ export default function AdminDashboard() {
               </button>
             </div>
             {selectedUser && (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
@@ -186,12 +213,12 @@ export default function AdminDashboard() {
               >
                 <p><strong>Name:</strong> {selectedUser.name}</p>
                 <p><strong>Email:</strong> {selectedUser.email}</p>
-                <p><strong>Phone:</strong> {selectedUser.phoneNumber}</p>
+                <p><strong>Phone:</strong> {selectedUser.phone}</p>
               </motion.div>
             )}
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
@@ -214,7 +241,7 @@ export default function AdminDashboard() {
               </button>
             </div>
             {selectedCaptain && (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
@@ -222,14 +249,14 @@ export default function AdminDashboard() {
               >
                 <p><strong>Name:</strong> {selectedCaptain.name}</p>
                 <p><strong>Email:</strong> {selectedCaptain.email}</p>
-                <p><strong>Phone:</strong> {selectedCaptain.phoneNumber}</p>
-                <p><strong>Vehicle Number:</strong> {selectedCaptain.vehicleNumber}</p>
+                <p><strong>Phone:</strong> {selectedCaptain.phone}</p>
+                <p><strong>Vehicle Number:</strong> {selectedCaptain.vehicleDetails.vehicleNumber}</p>
               </motion.div>
             )}
           </motion.div>
         </div>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.6 }}
@@ -237,7 +264,7 @@ export default function AdminDashboard() {
         >
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold">Help Requests</h2>
-            <button 
+            <button
               onClick={fetchHelpRequests}
               className="bg-yellow-400 text-black px-4 py-2 rounded-md hover:bg-yellow-500 transition-colors flex items-center"
               disabled={loading.helpRequests}
@@ -249,7 +276,7 @@ export default function AdminDashboard() {
           {helpRequests.length > 0 ? (
             <ul className="divide-y divide-gray-200">
               {helpRequests.map((request) => (
-                <motion.li 
+                <motion.li
                   key={request._id}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}

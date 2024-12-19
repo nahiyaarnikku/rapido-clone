@@ -68,17 +68,6 @@ const loginAdmin = asyncHandler(async (req, res) => {
     }
 });
 
-// Get the total number of users and captains
-const getUserAndCaptainCount = async (req, res) => {
-    try {
-        const userCount = await User.countDocuments();
-        const captainCount = await Captain.countDocuments();
-        res.status(200).json({ userCount, captainCount });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
 // Get the overall income (sum of all completed rides)
 const getIncomeDetails = async (req, res) => {
     try {
@@ -103,7 +92,7 @@ const getUserDetails = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-        res.status(200).json(user);
+        res.status(200).json({ result: "SUCCESS", message: user });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -117,7 +106,7 @@ const getCaptainDetails = async (req, res) => {
         if (!captain) {
             return res.status(404).json({ message: 'Captain not found' });
         }
-        res.status(200).json(captain);
+        res.status(200).json({ result: "SUCCESS", message: captain });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -133,12 +122,34 @@ const getHelpRequests = async (req, res) => {
     }
 };
 
+// API to get total counts of users and captains
+const getCounts = asyncHandler(async (req, res) => {
+    try {
+        const userCount = await User.countDocuments(); // Count total users
+        const captainCount = await Captain.countDocuments(); // Count total captains
+
+        res.status(200).json({
+            result: "SUCCESS",
+            message: {
+                totalUsers: userCount,
+                totalCaptains: captainCount,
+            },
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error retrieving counts',
+            error: error.message,
+        });
+    }
+});
+
 module.exports = {
     registerAdmin,
     loginAdmin,
-    getUserAndCaptainCount,
     getIncomeDetails,
     getUserDetails,
     getCaptainDetails,
     getHelpRequests,
+    getCounts
 };
