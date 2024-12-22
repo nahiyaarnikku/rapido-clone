@@ -104,27 +104,36 @@ const cancelRide = async (req, res) => {
     }
 };
 
-// get all rides, for now it is for all
+// Pending Rides by Captain
 const findRides = asyncHandler(async (req, res) => {
-    // const { vehicleType } = req.query;
+    const { captainId } = req.params; // Assuming captainId is passed as a route parameter
 
-    // if (!vehicleType || !['auto', 'bike'].includes(vehicleType.toLowerCase())) {
-    //     return res.json({ message: 'Invalid or missing vehicle type. Use "auto" or "bike".' });
-    // }
-
-    const rides = await Ride.find({ 'status': 'pending' });
-
-    if (rides.length === 0) {
-        return res.json({ message: 'No rides available' });
+    if (!captainId) {
+        return res.status(400).json({ message: 'Captain ID is required' });
     }
 
-    res.status(200).json({
-        result: "Success",
-        count: rides.length,
-        message: 'Rides available',
-        data: rides,
-    });
+    try {
+        // Find rides that are pending and assigned to the specific captain
+        const rides = await Ride.find({ status: 'pending', captain: captainId });
+
+        if (rides.length === 0) {
+            return res.status(404).json({ message: 'No pending rides available for this captain' });
+        }
+
+        res.status(200).json({
+            result: "Success",
+            count: rides.length,
+            message: 'Pending rides for the captain found',
+            data: rides,
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error fetching rides',
+            error: error.message,
+        });
+    }
 });
+
 
 module.exports = {
     findRides,

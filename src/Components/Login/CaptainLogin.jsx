@@ -37,6 +37,7 @@ const CaptainLogin = () => {
       console.log(response)
       if (response.data.result === 'Success') {
         localStorage.setItem('token', response.data.token);
+        localStorage.setItem('captainId', response.data._id);
         navigate('/captaindashboard');
       }
       if (response.data.result == 'Error') {

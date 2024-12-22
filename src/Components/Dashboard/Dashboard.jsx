@@ -51,16 +51,17 @@ const fetchData = async (period) => {
 const fetchUpcomingRides = async () => {
   await new Promise(resolve => setTimeout(resolve, 300));
   const now = new Date();
+  const captainId = localStorage.getItem('captainId');
   let config = {
     method: 'get',
     maxBodyLength: Infinity,
-    url: BaseUrl + '/api/rides/find',
+    url: BaseUrl + '/api/rides/find/' + captainId,
     headers: {}
   };
 
   let response = await axios.request(config);
   response = response.data;
-  if(!response.data) return;
+  if (!response.data) return;
   const reversedData = [...response.data].reverse()
   console.log(reversedData);
   return reversedData;
@@ -140,11 +141,11 @@ const CaptainDashboard = () => {
     return `${hours}:${formattedMinutes} ${period}`;
   }
 
-  function handleRide(id){
+  function handleRide(id) {
     console.log(id);
     navigate('/captain-ride-request', {
-      state: {id}
-    })    
+      state: { id }
+    })
   }
 
   return (
