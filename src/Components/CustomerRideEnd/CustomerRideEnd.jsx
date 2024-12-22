@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Star } from 'react-feather';
 import './CustomerRideEnd.css';
+import rideRequested from 'D:/myApp/rapido-clone/src/Components/CaptainRideRequest/CaptainRideRequest.jsx';
 
 const CustomerRideEnd = () => {
   const [rating, setRating] = useState(0);
@@ -14,6 +15,7 @@ const CustomerRideEnd = () => {
       <div className="card">
         <h1 className="card-title">Thank You for choosing Rapigo!</h1>
         <p className="thank-you-message">We hope you had a great experience.</p>
+        <p className="thank-you-message">Your fare is {rideRequested.estimatedFare}.</p>
         <div className="rating-section">
           <h2 className="rating-title">How was your ride?</h2>
           <div className="rating-stars">
@@ -30,7 +32,9 @@ const CustomerRideEnd = () => {
               You rated your ride {rating} {rating === 1 ? 'star' : 'stars'}. Thank you for your feedback!
             </p>
           )}
-          <button className="home-button" onClick={() => window.location.href = '/captaindashboard'}>Home</button>
+          <button className="home-button" onClick={() => window.location.href = '/captaindashboard'}>Paid via UPI</button>
+          <button className="home-button" onClick={() => window.location.href = '/captaindashboard'}>Paid via cash</button>
+
         </div>
       </div>
     </div>

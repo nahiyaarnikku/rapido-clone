@@ -12,7 +12,9 @@ import Navbar from './Components/Navbar/Navbar';
 import RideStarted from './Components/RideStarted/RideStarted.jsx';
 import RouteAndPricingIndia from './Components/RouteAndPricingIndia/RouteAndPricingIndia';
 import RoutePlanner from './Components/RoutePlanner/RoutePlanner';
+import CustomerRideEnd from './Components/CustomerRideEnd/CustomerRideEnd';
 import { DataProvider } from './Context/Context';
+
 
 export const BaseUrl = 'http://localhost:5000';
 
@@ -91,7 +93,7 @@ function App() {
               data-testid="loader"
             /></div>}> <CaptainSignup /></Suspense>} />
             <Route
-              path="/customer-signup"
+              path="/customersignup"
               element={
                 <Suspense fallback={<div className='suspense'> <ClipLoader color="#f9c935" /> </div>}>
                   <CustomerSignup isOpen={true} onClose={() => console.log('Closed')} />
@@ -142,6 +144,12 @@ function App() {
               color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <RideStarted /></Suspense>} />
             <Route path='/ride-started-captain' element={<Suspense fallback={<div className='suspense'> <ClipLoader
               color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <RideStarted /></Suspense>} />
+            <Route path='/customer-ride-ended' element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <CustomerRideEnd /></Suspense>} />
+            <Route path='/payment' element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <Stripe /></Suspense>} />
+            
+            
           </Routes>
         </div>
       </DataProvider>
