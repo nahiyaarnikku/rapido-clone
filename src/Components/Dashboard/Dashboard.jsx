@@ -152,6 +152,7 @@ const CaptainDashboard = () => {
     <div style={styles.container}>
       <header style={styles.header}>
         <h1 style={styles.headerTitle}>Captain Dashboard</h1>
+        <h3 style={styles.headerTitle2}>{localStorage.getItem('captainName')}</h3>
       </header>
       <main style={styles.main}>
         <section>
@@ -300,10 +301,16 @@ const styles = {
     backgroundColor: '#eab308',
     color: 'black',
     padding: '1rem',
+    display: 'flex',
   },
   headerTitle: {
     fontSize: '1.5rem',
     fontWeight: 'bold',
+    width: '90%',
+  },
+  headerTitle2: {
+    marginLeft: '1px',
+    fontSize: '1rem'
   },
   main: {
     padding: '1rem',
