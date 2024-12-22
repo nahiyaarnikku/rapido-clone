@@ -57,7 +57,7 @@ const CaptainSearch = () => {
         localStorage.setItem('bookedRide', JSON.stringify(response.data));
         // check if ride approved from captain
         // console.log(captain);
-        checkRideStatus(response.data._id, randomeCaptain);
+        checkRideStatus(response.data._id, response.data.price, randomeCaptain);
       })
       .catch((error) => {
         console.log(error);
@@ -92,8 +92,8 @@ const CaptainSearch = () => {
           const randomIndex = Math.floor(Math.random() * captains.length);
           // Select the random captain object
           const randomCaptain = captains[randomIndex];
+          setIsSearching(false);
           setCaptain(() => ({ ...randomCaptain }));
-          console.log(captain);
           bookRide(randomCaptain);
         }
         // setIsSearching(false);
@@ -104,14 +104,14 @@ const CaptainSearch = () => {
       });
   }, [rideType])
 
-  const checkRideStatus = (id, captainData) => {
-    console.log(captainData)
+  const checkRideStatus = (id, price, captainData) => {
     const bookedRideDetails = {
       captainName: captainData.name,
       captainRating: captainData.rating,
       captainRides: captainData.totalRides,
       captainVehicleNumber: captainData.vehicleDetails.vehicleNumber,
       captainPhone: captainData.phone,
+      price,
       origin: state.origin,
       destination: state.destination,
       center,
@@ -146,8 +146,13 @@ const CaptainSearch = () => {
 
   function generateOTP() {
     // Generate a random 4-digit number
-    const otp = Math.floor(1000 + Math.random() * 9000);
-    localStorage.setItem('otp', JSON.stringify(otp));
+    const oldOtp = JSON.parse(localStorage.getItem('otp'));
+    if (oldOtp) {
+      localStorage.setItem('otp', JSON.stringify(oldOtp));
+    } else {
+      const otp = Math.floor(1000 + Math.random() * 9000);
+      localStorage.setItem('otp', JSON.stringify(otp));
+    }
     // return otp;
   }
 

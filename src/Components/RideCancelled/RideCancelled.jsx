@@ -1,17 +1,20 @@
 import React from 'react';
 import { X, AlertCircle, ChevronLeft, RefreshCw } from 'react-feather';
 import './RideCancelled.css';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-const RideCancelled = ({ onGoBack, onRebook }) => {
+const RideCancelled = () => {
   const naviagte = useNavigate();
-  const handleRebook = ()=>{
-    naviagte('/route-planner');
+  const location = useLocation();
+  const isFromCaptain = location.pathname === '/ride-cancelled-captain';
+  const handleRebook = () => {
+    if (isFromCaptain) naviagte('/captaindashboard');
+    else naviagte('/route-planner');
   }
   return (
     <div className="ride-cancelled">
       <header className="header">
-        <button className="back-button" onClick={onGoBack}>
+        <button className="back-button">
           <ChevronLeft className="icon" />
         </button>
         <h1>Ride Cancelled</h1>
@@ -35,13 +38,17 @@ const RideCancelled = ({ onGoBack, onRebook }) => {
           <p>Free cancellations: 3 remaining today</p>
         </div>
       </div>
-
-      <div className="actions">
+      {isFromCaptain ? (<div className="actions">
+        <button className="rebook-button" onClick={handleRebook}>
+          {/* <RefreshCw className="icon" /> */}
+          Home
+        </button>
+      </div>) : (<div className="actions">
         <button className="rebook-button" onClick={handleRebook}>
           <RefreshCw className="icon" />
           Rebook Ride
         </button>
-      </div>
+      </div>)}
 
       <div className="support-info">
         <p>Need help? Contact our support</p>

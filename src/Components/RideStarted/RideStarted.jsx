@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import { Truck, Star, Phone, X } from 'react-feather';
-import './RideStarted.css';
+import 'leaflet/dist/leaflet.css';
+import React, { useEffect, useState } from 'react';
+import { Star, X } from 'react-feather';
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { BaseUrl } from '../../App';
+import './RideStarted.css';
 import axios from 'axios';
+import { BaseUrl } from '../../App';
 
 // Fix for default marker icon
 delete L.Icon.Default.prototype._getIconUrl;
@@ -31,12 +31,35 @@ const RideStarted = () => {
 
   const center = { lat: 28.679079, lng: 77.069710 }; // delhi center
 
-  const handleCancel = ()=>{
-    naviagte('/ride-cancelled');
+  const handleCancel = () => {
+    if (isFromCaptain) naviagte('/ride-cancelled-captain');
+    else naviagte('/ride-cancelled');
   }
 
   const handleEnd = () => {
-    naviagte('/customer-ride-end');
+    if (isFromCaptain) naviagte('/ride-ended');
+    else naviagte('/customer-ride-ended');
+  }
+
+  const checkRideStatus = () => {
+    const rideId = JSON.parse(localStorage.getItem('bookedRide'));
+    const interval = setInterval(() => {
+      let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: BaseUrl + '/api/rides/' + rideId._id,
+        headers: {}
+      };
+      axios.request(config)
+        .then((response) => {
+          // clearInterval(interval);
+          if (response.data.status === 'cancelled') handleCancel();
+          if (response.data.status === 'completed') handleEnd();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }, 10000)
   }
 
   useEffect(() => {
@@ -57,10 +80,32 @@ const RideStarted = () => {
     setCaptain(data);
     setPickup(data.pickup);
     setDropoff(data.dropoff);
+    checkRideStatus();
   }, []);
 
   const updateRideStatus = (status) => {
+    let data = JSON.stringify({
+      "status": status,
+    });
+    const rideId = JSON.parse(localStorage.getItem('bookedRide'));
+    let config = {
+      method: 'put',
+      maxBodyLength: Infinity,
+      url: BaseUrl + '/api/rides/update/' + rideId._id,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: data
+    };
 
+    axios.request(config)
+      .then((response) => {
+        if (status === "completed") handleEnd();
+        if (status === "cancelled") handleCancel();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   return (
@@ -139,19 +184,19 @@ const RideStarted = () => {
             <button className="contact-captain">
               Ride Started
             </button>
-            {isFromCaptain && (
-              <div>
-              <button className="decline-button" onClick={() => naviagte('/customer-ride-ended')}>
+            <div>
+              {isFromCaptain && (
+                <button className="decline-button" onClick={() => updateRideStatus('completed')}>
+                  <X className="icon" />
+                  End Ride
+                </button>
+              )}
+              <button className="decline-button" onClick={() => updateRideStatus("cancelled")}>
                 <X className="icon" />
-                End Ride
+                Cancel Ride
               </button>
-              <button className="decline-button" onClick={handleCancel}>
-              <X className="icon" />
-              Cancel Ride
-            </button>
-              </div>
+            </div>
 
-            )}
           </div>
         ) : (
           <div className="no-captain">

@@ -8,11 +8,12 @@ import CaptainApprovedRide from './Components/CaptainApprovedRide/CaptainApprove
 import CaptainRideRequest from './Components/CaptainRideRequest/CaptainRideRequest';
 import CaptainRideStart from './Components/CaptainRideStart/CaptainRideStart';
 import CaptainSearch from './Components/CaptainSearch/CaptainSearch';
+import CustomerRideEnd from './Components/CustomerRideEnd/CustomerRideEnd';
 import Navbar from './Components/Navbar/Navbar';
+import RideCancelled from './Components/RideCancelled/RideCancelled.jsx';
 import RideStarted from './Components/RideStarted/RideStarted.jsx';
 import RouteAndPricingIndia from './Components/RouteAndPricingIndia/RouteAndPricingIndia';
 import RoutePlanner from './Components/RoutePlanner/RoutePlanner';
-import CustomerRideEnd from './Components/CustomerRideEnd/CustomerRideEnd';
 import { DataProvider } from './Context/Context';
 
 
@@ -38,7 +39,7 @@ const CustomerProfile = React.lazy(() => import('./Components/Profile/customerpr
 function App() {
   const location = useLocation(); // Get the current route
   // Define your multiple conditions
-  const shouldRenderNavbar = location.pathname !== '/route-planner' && location.pathname !== '/customerhome' && location.pathname !== '/customerprofile' && location.pathname !== '/captain-approved-ride' && location.pathname !== '/captain-search' && location.pathname !== '/captaindashboard' && location.pathname !== '/captain-ride-request' && location.pathname !== '/ride-started' && location.pathname !== '/ride-started-captain';
+  const shouldRenderNavbar = location.pathname !== '/route-planner' && location.pathname !== '/customerhome' && location.pathname !== '/customerprofile' && location.pathname !== '/captain-approved-ride' && location.pathname !== '/captain-search' && location.pathname !== '/captaindashboard' && location.pathname !== '/captain-ride-request' && location.pathname !== '/ride-started' && location.pathname !== '/ride-started-captain' && location.pathname !== '/ride-cancelled' && location.pathname !== '/ride-cancelled-captain';
 
   return (
     <div className='app'>
@@ -146,10 +147,14 @@ function App() {
               color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <RideStarted /></Suspense>} />
             <Route path='/customer-ride-ended' element={<Suspense fallback={<div className='suspense'> <ClipLoader
               color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <CustomerRideEnd /></Suspense>} />
+            <Route path='/ride-ended' element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <CustomerRideEnd /></Suspense>} />
             <Route path='/payment' element={<Suspense fallback={<div className='suspense'> <ClipLoader
               color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <Stripe /></Suspense>} />
-            
-            
+            <Route path='/ride-cancelled' element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <RideCancelled /></Suspense>} />
+            <Route path='/ride-cancelled-captain' element={<Suspense fallback={<div className='suspense'> <ClipLoader
+              color={"#f9c935"} aria-label="Loading Spinner" data-testid="loader" /></div>}> <RideCancelled /></Suspense>} />
           </Routes>
         </div>
       </DataProvider>
