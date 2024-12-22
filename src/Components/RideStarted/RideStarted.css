@@ -26,6 +26,18 @@
   width: 50%;
 }
 
+.cancel-button{
+  margin: 0 auto;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: #ff0000;
+  color: white;
+  font-weight: bold;
+  border-radius: 50px;
+  width: 50%;
+}
+
 .search-panel {
   width: 35%;
   background-color: white;

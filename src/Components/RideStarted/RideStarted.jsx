@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { Truck, Star, Phone, X } from 'react-feather';
 import './RideStarted.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { BaseUrl } from '../../App';
 import axios from 'axios';
 
@@ -26,8 +26,18 @@ const RideStarted = () => {
   const [rideType, setRideType] = useState('');
   const location = useLocation();
   const isFromCaptain = location.pathname === '/ride-started-captain';
+  const naviagte = useNavigate();
+
 
   const center = { lat: 28.679079, lng: 77.069710 }; // delhi center
+
+  const handleCancel = ()=>{
+    naviagte('/ride-cancelled');
+  }
+
+  const handleEnd = () => {
+    naviagte('/customer-ride-end');
+  }
 
   useEffect(() => {
     const bookedRideDetails = JSON.parse(localStorage.getItem('bookedRideDetails'));
@@ -130,10 +140,17 @@ const RideStarted = () => {
               Ride Started
             </button>
             {isFromCaptain && (
-              <button className="decline-button" onClick={() => updateRideStatus('declined')}>
+              <div>
+              <button className="decline-button" onClick={() => naviagte('/customer-ride-ended')}>
                 <X className="icon" />
-                Cancel Ride
+                End Ride
               </button>
+              <button className="decline-button" onClick={handleCancel}>
+              <X className="icon" />
+              Cancel Ride
+            </button>
+              </div>
+
             )}
           </div>
         ) : (

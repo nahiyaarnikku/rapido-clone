@@ -1,8 +1,8 @@
-import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, LogIn } from 'lucide-react';
-import '../Admin/AdminLogin.css'
+import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import '../Admin/AdminLogin.css';
 
 export default function AdminLogin() {
   const [username, setUsername] = useState("");
@@ -16,11 +16,26 @@ export default function AdminLogin() {
     e.preventDefault();
     setError("");
     setIsLoading(true);
+    let data = JSON.stringify({
+      "email": username,
+      "password": password
+    });
 
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: 'http://localhost:5000/api/admins/login',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: data
+    };
     try {
-      const response = await axios.post("../api/admin/login", { username, password });
-      localStorage.setItem("adminToken", response.data.token);
-      navigate("/admin-dashboard");
+      const response = await axios.request(config).then(result => result.data);
+      if (response.result === "Success") {
+        localStorage.setItem("adminToken", response.token);
+        navigate("/admin-dashboard");
+      }
     } catch (err) {
       if (axios.isAxiosError(err) && err.response) {
         setError(err.response.data.message || "Invalid username or password");

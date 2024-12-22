@@ -34,6 +34,7 @@ const CaptainLogin = () => {
 
     try {
       const response = await axios.request(config);
+      console.log(response)
       if (response.data.result === 'Success') {
         localStorage.setItem('token', response.data.token);
         navigate('/captaindashboard');

@@ -1,8 +1,13 @@
 import React from 'react';
 import { X, AlertCircle, ChevronLeft, RefreshCw } from 'react-feather';
 import './RideCancelled.css';
+import { useNavigate } from 'react-router-dom';
 
 const RideCancelled = ({ onGoBack, onRebook }) => {
+  const naviagte = useNavigate();
+  const handleRebook = ()=>{
+    naviagte('/route-planner');
+  }
   return (
     <div className="ride-cancelled">
       <header className="header">
@@ -32,7 +37,7 @@ const RideCancelled = ({ onGoBack, onRebook }) => {
       </div>
 
       <div className="actions">
-        <button className="rebook-button" onClick={onRebook}>
+        <button className="rebook-button" onClick={handleRebook}>
           <RefreshCw className="icon" />
           Rebook Ride
         </button>

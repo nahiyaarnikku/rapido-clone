@@ -14,15 +14,9 @@ const Login = () => {
       <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full">
         {/* Rapido Logo and Header */}
         <div className="text-center mb-8">
-          <img
-            src={logo}
-            alt="Rapido Logo"
-            className="mx-auto mb-4"
-            style={{ width: '180px', height: '60px' }}
-          />
+        <img src={logo} alt="logo-img" className="app-logo" />
           <h1 className="text-2xl font-bold text-gray-800">First tell us, who are you?</h1>
         </div>
-
         {/* Login Buttons */}
         <div className="space-y-4">
           {/* Captain Login Button */}

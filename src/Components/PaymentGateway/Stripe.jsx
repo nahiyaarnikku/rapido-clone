@@ -28,7 +28,7 @@ const CheckoutForm = () => {
       const { error } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: "https://your-rapido-clone-url.com/payment-success",
+          return_url: "http://localhost:3000/payment-success", // Corrected URL
           payment_method_data: {
             billing_details: {
               name,
@@ -55,7 +55,12 @@ const CheckoutForm = () => {
       <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full">
         {isSuccess ? (
           <div className="text-center">
-            <svg className="w-16 h-16 text-green-500 mx-auto mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <svg
+              className="w-16 h-16 text-green-500 mx-auto mb-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+            >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
             <h1 className="text-2xl font-bold text-gray-800 mb-2">Payment Successful!</h1>
@@ -114,11 +119,9 @@ const CheckoutForm = () => {
   );
 };
 
-const Stripe = () => {
+const Stripe = ({ clientSecret }: {clientSecret: string }) => {
   const options = {
-    mode: "payment",
-    amount: 1099,
-    currency: "inr",
+    clientSecret,
     appearance: {
       theme: "stripe",
       variables: {
