@@ -16,7 +16,7 @@ const CheckoutForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!stripe || !elements) return;
@@ -119,9 +119,9 @@ const CheckoutForm = () => {
   );
 };
 
-const Stripe = ({ clientSecret }: {clientSecret: string }) => {
+const Stripe = () => {
   const options = {
-    clientSecret,
+    clientSecret: "sk_test_51LokRoSIzhZEMyrFd8wgPNcuHbYSIgSxjhtRyW8dEFNcu3OSEjdtxklqb6rCezocYSQ4lQTq73MDCpg4dZuMsLia00ktPeebLT",
     appearance: {
       theme: "stripe",
       variables: {
