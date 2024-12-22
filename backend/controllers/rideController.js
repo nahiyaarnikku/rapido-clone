@@ -85,7 +85,8 @@ const getRideDetails = async (req, res) => {
 const cancelRide = async (req, res) => {
     const { id } = req.params;
     try {
-        const ride = await Ride.findById(id);
+        const _id = new ObjectId(id)
+        const ride = await Ride.findById(_id);
         if (!ride) {
             return res.status(404).json({ message: 'Ride not found' });
         }

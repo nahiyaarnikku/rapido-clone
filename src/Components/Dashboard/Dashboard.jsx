@@ -155,7 +155,7 @@ const CaptainDashboard = () => {
       </header>
       <main style={styles.main}>
         <section>
-          <h2 style={styles.sectionTitle}>Upcoming Rides</h2>
+          <h2 style={styles.sectionTitle}>Rides</h2>
           <div style={styles.upcomingRidesGrid}>
             {upcomingRides && upcomingRides.map((ride) => (
               <div key={ride._id} style={styles.upcomingRideCard} onClick={() => handleRide(ride._id)}>

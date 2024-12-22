@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { MessageCircle, X } from 'lucide-react';
+import './Chatbot.css';
 
 const initialMessage = {
-  text: "Hello! What would you like to know about Rapido clone?",
+  text: "Hello! What would you like to know about Rapigo?",
   isUser: false,
   options: [
-    "What is Rapido clone?",
+    "What is Rapigo?",
     "How does it work?",
     "Is it safe?",
     "How much does it cost?",
@@ -50,30 +51,26 @@ export function Chatbot() {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-50">
+    <div className="chatbot-container">
       {isOpen ? (
-        <div className="bg-white w-80 h-96 rounded-lg shadow-lg flex flex-col">
-          <div className="flex items-center justify-between p-4 border-b">
-            <h3 className="text-lg font-semibold">Rapido Clone Chat</h3>
-            <button onClick={() => setIsOpen(false)} className="text-gray-500 hover:text-gray-700">
-              <X className="h-6 w-6" />
+        <div className="chatbox">
+          <div className="chatbox-header">
+            <h3>Rapigo Bot</h3>
+            <button onClick={() => setIsOpen(false)}>
+              <X />
             </button>
           </div>
-          <div className="flex-1 overflow-y-auto p-4">
+          <div className="chatbox-messages">
             {messages.map((message, index) => (
-              <div key={index} className="mb-4">
-                <div className={`flex ${message.isUser ? 'justify-end' : 'justify-start'} mb-2`}>
-                  <div className={`rounded-lg p-2 max-w-[80%] ${message.isUser ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>
-                    {message.text}
-                  </div>
-                </div>
+              <div key={index} className={`chatbox-message ${message.isUser ? 'user' : 'bot'}`}>
+                <div className="chatbox-message-text">{message.text}</div>
                 {message.options && (
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {message.options.map((option, optionIndex) => (
+                  <div className="chatbox-options">
+                    {message.options.map((option, i) => (
                       <button
-                        key={optionIndex}
+                        key={i}
                         onClick={() => handleOptionClick(option)}
-                        className="bg-gray-100 hover:bg-gray-200 text-sm py-1 px-2 rounded"
+                        className="chatbox-option-button"
                       >
                         {option}
                       </button>
@@ -85,8 +82,8 @@ export function Chatbot() {
           </div>
         </div>
       ) : (
-        <button onClick={() => setIsOpen(true)} className="bg-blue-500 hover:bg-blue-600 text-white rounded-full p-3">
-          <MessageCircle className="h-6 w-6" />
+        <button className="chatbot-toggle-button" onClick={() => setIsOpen(true)}>
+          <MessageCircle />
         </button>
       )}
     </div>
