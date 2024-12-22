@@ -110,21 +110,32 @@ const findRides = asyncHandler(async (req, res) => {
     const { captainId } = req.params; // Assuming captainId is passed as a route parameter
 
     if (!captainId) {
-        return res.status(400).json({ message: 'Captain ID is required' });
+        return res.status(200).json({ message: 'Captain ID is required' });
     }
 
     try {
-        // Find rides that are pending and assigned to the specific captain
-        const rides = await Ride.find({ status: 'pending', captain: captainId });
+        // Get today's date start and end time
+        const startOfDay = new Date();
+        startOfDay.setHours(0, 0, 0, 0); // Set time to 00:00:00 for the start of the day
+
+        const endOfDay = new Date();
+        endOfDay.setHours(23, 59, 59, 999); // Set time to 23:59:59 for the end of the day
+
+        // Find rides that are pending, assigned to the specific captain, and created today
+        const rides = await Ride.find({
+            status: 'pending',
+            captain: captainId,
+            createdAt: { $gte: startOfDay, $lte: endOfDay } // Filter rides by today's date
+        });
 
         if (rides.length === 0) {
-            return res.status(404).json({ message: 'No pending rides available for this captain' });
+            return res.status(200).json({ message: 'No pending rides available for this captain today' });
         }
 
         res.status(200).json({
             result: "Success",
             count: rides.length,
-            message: 'Pending rides for the captain found',
+            message: 'Pending rides for the captain found today',
             data: rides,
         });
     } catch (error) {

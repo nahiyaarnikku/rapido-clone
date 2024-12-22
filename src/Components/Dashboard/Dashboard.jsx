@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { Line, Bar } from 'react-chartjs-2';
-import { format, subDays, addHours } from 'date-fns';
+import axios from 'axios';
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
   BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LinearScale,
+  LineElement,
+  PointElement,
   Title,
   Tooltip,
-  Legend,
 } from 'chart.js';
-import { BaseUrl } from '../../App';
-import axios from 'axios';
+import { format, subDays } from 'date-fns';
+import React, { useEffect, useState } from 'react';
+import { Bar, Line } from 'react-chartjs-2';
 import { useNavigate } from 'react-router-dom';
+import { BaseUrl } from '../../App';
 
 ChartJS.register(
   CategoryScale,
@@ -157,13 +157,14 @@ const CaptainDashboard = () => {
         <section>
           <h2 style={styles.sectionTitle}>Rides</h2>
           <div style={styles.upcomingRidesGrid}>
-            {upcomingRides && upcomingRides.map((ride) => (
+            {upcomingRides ? upcomingRides.map((ride) => (
               <div key={ride._id} style={styles.upcomingRideCard} onClick={() => handleRide(ride._id)}>
                 <div style={styles.upcomingRideTime}>{convertToAMPM(ride.createdAt)}</div>
                 <div>Pickup: {ride.startLocation}</div>
                 <div>Dropoff: {ride.endLocation}</div>
               </div>
-            ))}
+            )) : <p>No upcoming rides available for today</p>
+            }
           </div>
         </section>
 
